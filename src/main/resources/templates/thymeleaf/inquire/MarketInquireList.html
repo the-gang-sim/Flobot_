@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>마켓 주문목록</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<style>
+</style>
+</head>
+<body>
+<div class="w3-top" >
+  <div class="w3-row w3-large w3-light-grey">
+   <div class="w3-col s3">
+      <a class="w3-button w3-block"  href = "/"  style = "color: black"><b>Flobot</b></a>
+    </div>
+    <div class="w3-col s3">
+      <a class="w3-button w3-block" href="/market/marketInfo">내 마켓정보</a>
+    </div>
+    <div class="w3-col s3">
+    	<a class="w3-button w3-block" href="/goods/goodsList">마켓 물품목록</a>
+    </div>
+    <div class="w3-col s3">
+	  <a class="w3-button w3-block" href="/purchase/marketPurchaseList">마켓 주문목록</a>
+    </div>
+  </div>
+</div><br/><br/><br/><hr/>
+<div align="center">
+<table width="1200" align="center">
+	<tr align="center"><td>번호</td><td>상품명</td><td>종류</td><td>제목</td><td>작성자</td><td>상태</td></tr>
+	<tr th:each=" vo, index : ${list}" align="center">
+	<th>[[${index.index + 1}]]</th>
+	<td>[[${vo.goodsName}]]</td><td>[[${vo.inquireKind}]]</td>
+	<td>
+		<a th:href="|marketInquireDetail/${vo.inquireNum}|">[[${vo.inquireSubject}]]</a>
+	</td>
+	<td>[[${vo.memberId}]]</td>
+	<td th:if="${vo.inquireAnswer == null}">답변준비중</td>
+	<td th:if="${vo.inquireAnswer != null}">답변완료</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

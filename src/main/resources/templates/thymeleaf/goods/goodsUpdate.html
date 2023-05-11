@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+	function imgDel(orgImage, imgae, btn, main){
+		$.ajax({
+			type:'post',
+			url:'fileDel',
+			dataType:'text',
+			data:{"orgName": orgImage , "htmlName" : imgae},
+			success:function(result){
+				if(result == "1"){
+					$(btn).text("삭제취소");
+					if(main=="1"){
+						$("#img").css("display","none");
+						$("#imgPut").css("display","");
+					}
+				}else{
+					$(btn).text("삭제");
+					if(main=="1"){
+						$("#img").css("display","");
+						$("#imgPut").css("display","none");
+					}
+				}
+			},
+			error:function(){
+				alert("서버 오류");
+			}
+		});
+	}
+
+</script>
+</head>
+<body>
+상품업데이트 페이지<br />
+<form action="/goods/goodsUpdate" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="goodsNum" th:value="${goodsCommand.goodsNum}" />
+	<table border="1" width="600">
+		<tr><th>구분</th><td>내용</td></tr>
+		<tr><th>상품 명</th><td><input type="text" name="goodsName" th:value="${goodsCommand.goodsName}"/></td></tr>
+		<tr><th>상품설명</th><td><textarea  rows="10" cols="30" name="goodsContent" >[[${goodsCommand.goodsContent}]]</textarea></td></tr>
+		<tr><th>배송비</th><td><input type="number"  min="0" step="50" max="10000" name="deliveryCost" th:value="${goodsCommand.deliveryCost}" /></td></tr>
+		<tr><th>제조사</th><td> <input type="text" name="manufacturer" th:value="${goodsCommand.manufacturer}" /></td></tr>
+		<tr><th>상품종류</th><td><input type="text" name="goodsKind" th:value="${goodsCommand.goodsKind}"/></td></tr>
+		<tr><th>대문이미지</th><td><img th:src="|/goods/image/${goodsCommand.goodsMain}|" width="100" id="img" />
+								<button type="button" th:attr="onclick=|imgDel('${goodsCommand.goodsMainOrg}', '${goodsCommand.goodsMain}',this,'1');|">삭제</button>
+								<input type="file" name="goodsMain" id="imgPut" style="display:none"/></td></tr>
+		<tr><th>상세이미지</th>
+			<td><th:block th:each="goodsImage,idx : ${#strings.arraySplit(goodsCommand.goodsImage,'-')}">
+					<img th:src="|/goods/image/${goodsImage}|" width="100" />
+					<button type="button" th:attr="onclick=|imgDel('${goodsImage}', '${#strings.arraySplit(goodsCommand.goodsImage,'-')[idx.index]}'
+													,this,'2');|">삭제</button>
+					<br />
+				</th:block><input type="file" name="goodsImage" multiple="multiple"/>
+			</td></tr>
+		<tr><th colspan="2" align="right"><input type="submit" value="등록" /></th></tr>
+	</table>
+</form>
+</body>
+</html>

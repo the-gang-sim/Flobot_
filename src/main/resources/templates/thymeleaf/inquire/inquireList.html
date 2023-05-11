@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		var st = $( 'input#st' ).val();
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=315, height=200, top = 100, left=100");
+		}else{
+			window.open("/inquire/inquireWrite?goodsNum=[[${goodsNum}]]&marketNum=[[${marketNum}]]"+st, "inquireWrite",
+					"width=700, height=650, top = 100, left=100");
+		}
+	});
+});
+
+function contentOpen(id){
+	if($(id).css("display") == "none"){
+		$(id).css("display", "");
+	}else{
+		$(id).css("display", "none");
+	}
+}
+
+function inquireUpdate(inquireNum){
+	window.open("/inquire/inquireUpdate?inquireNum="+inquireNum, "", 
+			"width=700, height=650, top=100, left=100")
+}
+
+function inquireDelete(inquireNum){
+	$.ajax({
+		type:'post',
+		url:'/inquire/inquireDelete',
+		data: {'inquireNum':inquireNum},
+		dataType:"text",
+		success:function(result){
+			if(result.trim() == "1"){
+				inquire();
+			}else{
+				alert("삭제되지 않았습니다.");
+			}
+		},
+		error:function(){
+			alert("asdfasdfas.");
+		}
+	});
+}
+
+
+</script>
+</head>
+<body>
+<br/>
+<table width="800" align="center">
+	<tr><td colspan="6" align="right">
+			<button type="button" id="btn">문의하기</button>
+		</td></tr>
+	<th:block th:each=" vo , idx : ${list}">
+	<tr><td>[[${idx.index + 1}]]</td>
+		<td>
+		<span th:if="${vo.inquireAnswer == null}">검토중</span>
+		<span th:if="${vo.inquireAnswer != null}">답변완료</span>
+		</td>
+		<td>[[${vo.inquireKind}]]</td>
+			<th><a th:href="|javascript:contentOpen('.inq_${vo.inquireNum}')|" >[[${vo.inquireSubject}]]</a></th>
+	
+			<td>[[${vo.memberId}]]</td>
+			<td>[[${#dates.format(vo.inquireRegiDate,'yyyy-MM-dd')}]]</td></tr>	
+	
+		
+	<tr style="display:none;" th:class="inq_ + ${vo.inquireNum}" >
+		<td colspan="6" >
+		<br/>
+			<span th:utext="${#strings.replace(vo.inquireContent,newLineChar,'&lt;br /&gt;')}" ></span>
+			<p align="right">
+			<th:block th:if="${session.authInfo != null and vo.inquireAnswer == null}">
+				<th:block th:if="${session.authInfo.userId == vo.memberId}">
+					<button type="button" th:attr="onclick=|inquireUpdate('${vo.inquireNum}')|">문의수정</button> | 
+					<button type="button" th:attr="onclick=|inquireDelete('${vo.inquireNum}')|">문의삭제</button>
+				</th:block>
+			</th:block>
+			</p>
+			<hr />
+			<span th:utext="${#strings.replace(vo.inquireAnswer,newLineChar,'&lt;br /&gt;')}" ></span>
+		</td>
+	</tr>
+	
+	</th:block>
+</table>
+
+</body>
+</html>

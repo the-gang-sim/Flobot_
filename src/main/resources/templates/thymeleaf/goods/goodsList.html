@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>마켓 상품목록</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<style>
+</style>
+</head>
+<body>
+<div class="w3-top" >
+  <div class="w3-row w3-large w3-light-grey">
+   <div class="w3-col s3">
+      <a class="w3-button w3-block"  href = "/"  style = "color: black"><b>Flobot</b></a>
+    </div>
+    <div class="w3-col s3">
+      <a class="w3-button w3-block" href="/market/marketInfo">내 마켓정보</a>
+    </div>
+    <div class="w3-col s3">
+    	<a class="w3-button w3-block" href="/purchase/marketPurchaseList">마켓 주문목록</a>
+    </div>
+    <div class="w3-col s3">
+	  <a class="w3-button w3-block" href="/inquire/MarketInquireList">마켓 문의목록</a>
+    </div>
+  </div>
+</div><br/><br/><br/><hr/>
+<div align="center">
+	<table width="800">
+		<tr align="center"><th>번호</th><th>대표이미지</th><th>상품명</th><th>상품종류</th><th>제조사</th><th>재고수량</th><th>상품조회수</th><th>배송비</th><th>입고</th></tr>
+		<tr th:each="vo,idx:${list}" align="center">
+			<td><a th:href="|/goods/goodsInfo?goodsNum=${vo.goodsNum}|">[[${idx.count}]]</a></td>
+			<td><img th:src="|/goods/image/${vo.goodsMain}|" width="100" /></td>
+			<td>[[${vo.goodsName}]]</td>
+			<td>[[${vo.goodsKind}]]</td>
+			<td>[[${vo.manufacturer}]]</td>
+			<td>[[${vo.totalQty}]]</td>
+			<td>[[${vo.visitCount}]]</td>
+			<td>[[${vo.deliveryCost}]]</td>
+			<td><a th:href="|/goodsIpgo/goodsIpgo?goodsNum=${vo.goodsNum}|"><button type="button">입고</button></a></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

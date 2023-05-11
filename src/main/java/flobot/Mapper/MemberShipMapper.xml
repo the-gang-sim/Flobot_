@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="flobot.Mapper.MemberShipMapper">
+
+<select id = "memberNumCreate" resultType="string">
+select concat('mem' , nvl(max(substr(member_num,4)),100000) + 1)
+from member
+
+
+</select>
+<insert id="MemberShipInsert" parameterType="memVO">
+	insert into member(MEMBER_NUM,MEMBER_ID,MEMBER_PW,MEMBER_NAME,MEMBER_ADDR,
+					<if test="memberAddr2 != null">
+					MEMBER_ADDR2,
+					</if>					
+					MEMBER_POST,
+                   MEMBER_REGI_DATE,MEMBER_GENDER,MEMBER_PHONE,MEMBER_EMAIL,MEMBER_BIRTH, MEMBER_MARRIED)
+	values(  #{memberNum}
+					,#{memberId},#{memberPw},#{memberName},#{memberAddr},
+					<if test="memberAddr2 != null">
+					#{memberAddr2},
+					</if>
+					#{memberPost},
+					sysdate,#{memberGender},#{memberPhone},#{memberEmail},#{memberBirth}, #{memberMarried})
+</insert>
+<update id="memberEmailChk">
+	update member set member_ok = #{chk}
+	where member_email=#{chk}
+</update>
+<update id="memberPwModipy" parameterType="memVO">
+	update member set member_Pw = #{memberPw}
+	where member_Id=#{memberId}
+</update>
+
+<select id="myInfoSelect" parameterType="string" resultType="memVO">
+	select MEMBER_NUM memberNum,MEMBER_ID memberId,MEMBER_PW memberPw
+	      ,MEMBER_NAME memberName,MEMBER_ADDR memberAddr
+	      ,MEMBER_ADDR2 memberAddr2,MEMBER_POST memberPost
+          ,MEMBER_REGI_DATE memberRegiDate,MEMBER_GENDER memberGender
+          ,MEMBER_PHONE memberPhone,MEMBER_EMAIL memberEmail
+          ,MEMBER_BIRTH memberBirth, MEMBER_MARRIED memberMarried
+    from member
+    where MEMBER_ID = #{userId}
+</select>
+
+</mapper>

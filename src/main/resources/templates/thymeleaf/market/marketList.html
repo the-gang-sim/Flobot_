@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#frm").submit(function(){
+		if(  $("input:checkbox[name=marketDels]:checked").length < 1 ){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+	/// 체크박스를 모두 체크하거나 체크를 없앨 때 
+	$("#checkBoxs").click(function(){
+		if ($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=marketDels]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=marketDels]").prop("checked",false);
+		}
+	});
+	$("input:checkbox[name=marketDels]").click(function(){
+		var tot = $("input:checkbox[name=marketDels]").length;
+		var checked = $("input:checkbox[name=marketDels]:checked").length;
+		if (tot == checked){
+			$("#checkBoxs").prop("checked", true)
+		}else{
+			$("#checkBoxs").prop("checked", false)
+		}
+	});
+});
+</script>
+</head>
+<body>
+입점 업체 목록</br>
+<form action="marketList" >
+업체 검색 : <input type="search" name="marketWord" size=50 th:value="${marketWord}"/>
+		    <input type="submit" value="검색" />
+</form>
+<br/>
+<form action="marketsDelete" id="frm">
+<table border=1 width=600px>
+<tr><td>입점업체번호</td><td>업체아이디</td><td>업체이름</td><td>입점일</td><td>연락처</td>
+	<td><input type="submit" value="삭제" />
+		<input type="checkbox" id="checkBoxs" />
+	</td>
+</tr>
+
+<tr th:each="MarketVO : ${list}">
+	<td><a th:href="|marketDetail?marketNum=${MarketVO.marketNum}|">[[${MarketVO.marketNum}]]</a></td>
+	<td>[[${MarketVO.marketId}]]</td>
+	<td>[[${MarketVO.marketName}]]</td>
+	<td>[[${#dates.format(MarketVO.marketRegiDate,'yyyy-MM-dd')}]]</td>
+	<td>[[${MarketVO.marketPhone}]]</td>
+	<td><input type="checkbox" name="marketDels" th:value="${MarketVO.marketNum}"/></td>
+</tr>
+</table>
+</form>
+
+
+<a href="/">메인으로가기</a>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flobot.Mapper.GoodsIpgoMapper">
+	<select id="goodsIpgoNumCreate" resultType="string">
+		select concat('Ipgo',nvl(max(substr(GOODS_IPGO_NUM,5)),100000) + 1)
+		from goods_Ipgo
+	</select>
+	
+	<insert id="goodsIpgo" parameterType="ipgoVO">
+		insert into goods_ipgo(GOODS_IPGO_NUM, GOODS_NUM, IPGO_QTY, IPGO_DATE, MADE_DATE, GOODS_PRICE)
+		values(#{goodsIpgoNum}, #{goodsNum}, #{ipgoQty}, sysdate, #{madeDate}, #{goodsPrice})
+	</insert>
+</mapper>

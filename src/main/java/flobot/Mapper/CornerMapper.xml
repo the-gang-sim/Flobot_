@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="flobot.Mapper.CornerMapper">
+
+	<select id="wishCount" parameterType="wishVO" resultType="string">
+		select count(*) from wish 
+		where goods_num = #{goodsNum} and member_num = #{memberNum} 
+	</select>
+
+	<update id="wishAdd" parameterType="wishVO">
+		merge into wish w
+			using ( select goods_num from goods where goods_num = #{goodsNum} ) g
+			on (w.goods_num = g.goods_num and w.member_num = #{memberNum})
+		when matched then
+			update set REGI_DATE = sysdate
+			delete where w.goods_num = #{goodsNum} and w.member_num = #{memberNum}
+		when not matched then
+			insert(MEMBER_NUM, GOODS_NUM, REGI_DATE)
+			values(#{memberNum}, #{goodsNum}, sysdate)
+	</update>
+	
+	<update id="cartAdd" parameterType="cartVO">
+		merge into cart c
+			using ( select goods_num from goods where goods_num = #{goodsNum} ) g
+			on (c.goods_num = g.goods_num and c.member_num = #{memberNum})
+		when matched then
+			update set CART_QTY = CART_QTY+#{qty}
+		when not matched then
+			insert(MEMBER_NUM, GOODS_NUM, CART_QTY)
+			values(#{memberNum}, #{goodsNum}, #{qty})
+	</update>
+	<update id="cartDown">
+		update cart set CART_QTY = CART_QTY-1
+		where goods_Num=#{goodsNum} and member_Num=#{memberNum}
+	</update>
+	
+	<select id="cartList" parameterType="string" resultType="cartVO">
+		select c.goods_Num goodsNum, c.cart_qty qty, c.member_num memberNum
+				,g.goods_name goodsName, g.DELIVERY_COST deliveryCost, g.goods_main goodsMain
+				,i.goods_Price goodsPrice
+		from cart c join goods g
+		on c.goods_num = g.goods_num join goods_Ipgo i
+		on c.goods_num = i.goods_num
+		where c.member_num = #{memberNum} 
+		Group by c.goods_num, c.member_num, c.cart_qty
+				, g.goods_name, g.delivery_cost, g.goods_main
+				, i.goods_price
+	</select>
+</mapper>
+
+

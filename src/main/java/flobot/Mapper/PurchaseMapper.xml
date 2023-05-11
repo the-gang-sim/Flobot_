@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flobot.Mapper.PurchaseMapper">
+	<select id="goodsList" parameterType="cartVO" resultType="cartVO">
+		select c.goods_Num goodsNum, c.cart_qty qty, c.member_num memberNum
+				,g.goods_name goodsName, g.DELIVERY_COST deliveryCost, g.goods_main goodsMain
+				,i.goods_Price goodsPrice
+		from cart c join goods g
+		on c.goods_num = g.goods_num join goods_Ipgo i
+		on c.goods_num = i.goods_num
+		where c.member_num = #{memberNum} and c.goods_num in
+			<foreach collection="goodsNums" item="goodsNum" open="(" close=")" separator="," index="index">
+    			#{goodsNum}
+    		</foreach>
+		Group by c.goods_num, c.member_num, c.cart_qty
+				, g.goods_name, g.delivery_cost, g.goods_main
+				, i.goods_price
+	</select>
+	
+	<select id="selectNum" resultType="string">
+		select concat('pur' , nvl(max(substr(purchase_num,4)),100000) + 1) from purchase
+	</select>
+	
+	<insert id="purchaseListInsert" parameterType="purVO" >
+		insert into purchase_list(PURCHASE_NUM,GOODS_NUM,  PURCHASE_QTY, PURCHASE_PRICE, PURCHASE_STATUS)
+		select #{purchaseNum}, c.GOODS_NUM, cart_QTY, GOODS_PRICE, '결제대기중'
+		from cart c join (select *
+		                  from (select GOODS_NUM, GOODS_PRICE,
+		                        RANK() OVER(PARTITION BY GOODS_NUM ORDER BY GOODS_IPGO_NUM desc) goods_RANK
+		                        from goods_ipgo)
+		                  where goods_RANK = 1) ipgo
+		on c.GOODS_NUM = ipgo.GOODS_NUM
+		where member_num = #{memberNum}
+		and c.goods_num in 
+		<foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+				#{goodsNum}
+		</foreach>
+	</insert>
+	<delete id="cartItemDelete" parameterType="wishVO">
+		delete from cart
+		where member_num = #{memberNum}
+		and goods_num in 
+		<foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+			#{goodsNum}
+		</foreach>
+	</delete>
+	<insert id="goodsOrder" parameterType="purVO">
+		insert into purchase(PURCHASE_NUM, PURCHASE_NAME, PURCHASE_DATE, PURCHASE_PHONE, PURCHASE_ADDR, PURCHASE_ADDR2
+							, PURCHASE_POST, PURCHASE_MESSAGE, PURCHASE_STATUS, MEMBER_NUM)
+		values(#{purchaseNum},#{purchaseName},sysdate, #{purchasePhone},#{purchaseAddr},#{purchaseAddr2},#{purchasePost}
+				,#{purchaseMessage},'결제대기중',#{memberNum})
+	</insert>	
+	
+	<select id="purchaseSelect" resultType="purVO" parameterType="string">
+		select PURCHASE_NUM purchaseNum, PURCHASE_NAME purchaseName, PURCHASE_DATE purchase_date, PURCHASE_PHONE purchasePhone
+				, PURCHASE_ADDR purchaseAddr, PURCHASE_ADDR2 purchaseAddr2, PURCHASE_POST purchasePost
+				, PURCHASE_MESSAGE purchaseMessage, PURCHASE_STATUS purchaseStatus, MEMBER_NUM memberNum
+		from purchase
+		where purchase_Num = #{purchaseNum}
+	</select>
+	
+	<insert id="paymentInsert" parameterType="paymentVO">
+		insert into payment(PURCHASE_NUM,CONFIRM_NUM, CARD_NUM, CARD_CODE,  TID, TOTAL_PRICE, RESULT_msg
+							, PAY_METHOD, APPL_DATE, APPL_TIME, CARD_PurchaseName)
+		values(#{purchaseNum},#{confirmNumber},#{cardNum},#{cardCode},#{tid},#{totalPrice},#{resultMessage}
+				,#{payMethod},#{applDate},#{applTime},#{CARD_PurchaseName})	
+	</insert>
+	
+	<update id="purchaseStatusUpdate" parameterType="string">
+		update purchase_list
+		set purchase_status = '결제완료'
+		where purchase_num = #{purchaseNum}
+	</update>
+	
+	<select id="selectMember" parameterType="string" resultType="authInfoVO">
+		select member_id userId , member_email userEmail , member_pw  userPw, member_phone phone, member_Ok memberOk, 'mem' grade
+		from member
+		where member_num = (select member_num from purchase where purchase_num = #{purchaseNum}) 
+	</select>
+	
+	<select id="purchaseList" resultType="orderListVO">
+	select gs.goods_Name goodsName, gs.goods_Main goodsMain, gs.goods_Num goodsNum
+				, pm.total_price totalPrice, pm.APPL_DATE applDate
+				, pl.purchase_qty purchaseQty, pl.purchase_price purchasePrice, pl.PURCHASE_STATUS purchaseStatus
+				, p.purchase_Num purchaseNum
+				, g.review_Num reviewNum 
+		from  purchase_list pl join purchase p 
+        on pl.purchase_Num = p.purchase_Num join goods gs
+        on gs.goods_Num = pl.goods_Num left outer join (select r.goods_Num,r.review_Num, r.purchase_Num from review r join purchase p on p.purchase_num = r.purchase_num where p.member_num = #{userNum}) g
+        on g.goods_Num = pl.goods_Num left outer join payment pm
+		on pm.purchase_Num = p.purchase_Num 
+		where p.member_num = #{userNum}
+		order by p.purchase_num desc
+	</select>
+	<select id="marketPurchaseList" resultType="orderListVO">
+		select g.goods_Name goodsName, g.goods_Main goodsMain, g.goods_Num
+				, pm.total_price totalPrice, pm.APPL_DATE applDate
+				, pl.purchase_qty purchaseQty, pl.purchase_price purchasePrice, pl.PURCHASE_STATUS purchaseStatus
+				, p.purchase_Num purchaseNum
+		from purchase_list pl join purchase p
+		on pl.purchase_Num = p.purchase_Num left outer join payment pm
+		on pm.purchase_Num = p.purchase_Num join goods g
+		on g.goods_num = pl.goods_num
+		where g.market_num = #{userNum}
+	</select>
+	<insert id="deliveryInsert">
+		insert into delivery(PURCHASE_NUM, DELIVERY_NUMBER, delivery_company)
+		values(#{purchaseNum},#{deliveryNum},#{deliveryCompany})
+	</insert>
+	<update id="deliveryUpdate">
+		update purchase_list set purchase_status='배송 중'
+		where purchase_num = #{purchaseNum}
+	</update>
+	<update id="temp">
+		update purchase_list set purchase_status='배송완료'
+		where purchase_num = #{purchaseNum}
+	</update>
+	<update id="purchaseOk">
+		update purchase_list set purchase_status='구매완료'
+		where purchase_num = #{purchaseNum}
+	</update>
+</mapper> 

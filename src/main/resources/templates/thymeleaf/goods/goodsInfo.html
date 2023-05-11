@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+상품개별정보보기<br />
+<img th:src="|/goods/image/${goodsCommand.goodsMain}|" /> <br />
+상품명 : [[${goodsCommand.goodsName}]]<br />
+조회수 : [[${goodsCommand.visitCount}]]<br />
+재고수량 : [[${goodsCommand.totalQty}]]<br />
+상품설명 : <textarea rows="10" cols="30">[[${goodsCommand.goodsContent}]]</textarea><br />
+제조사 : [[${goodsCommand.manufacturer}]]<br />
+판매업체 : [[${goodsCommand.marketNum}]]<br />
+상품종류 : [[${goodsCommand.goodsKind}]]<br />
+상품배송비 : [[${goodsCommand.deliveryCost}]]<br />
+상품 이미지 : <br />
+			<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImage,'-')}">
+				<img th:src="|/goods/image/${goodsImage}|" /><br />
+			</th:block>
+<br />
+<a href="/goods/goodsList">목록으로가기</a><br />
+<a th:href="|/goodsIpgo/goodsIpgo?goodsNum=${goodsCommand.goodsNum}|"><button type="button">입고</button></a><br/>
+<a th:href="|/goods/goodsUpdate?goodsNum=${goodsCommand.goodsNum}|">상품 수정</a><br />
+<a th:href="|/goods/goodsDelete?goodsNum=${goodsCommand.goodsNum}|">상품 삭제</a>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flobot.Mapper.MarketMapper">
+	<insert id="marketInsert" parameterType="marketVO">
+		insert into market(MARKET_NUM, MARKET_ID, MARKET_PW, MARKET_NAME, MARKET_ADDR, MARKET_ADDR2, MARKET_POST
+							, MARKET_REGI_DATE, MARKET_PHONE, MARKET_EMAIL, MARKET_BIRTH, MARKET_ACCOUNT, MARKET_BANK, MARKET_KIND)
+		values(#{marketNum}, #{marketId}, #{marketPw}, #{marketName}, #{marketAddr}, #{marketAddr2}, #{marketPost}
+				, #{marketRegiDate}, #{marketPhone}, #{marketEmail}, sysdate, #{marketAccount}, #{marketBank}, #{marketKind})
+	</insert>
+	
+	<select id="marketSelectOne" parameterType="string" resultType="marketVO">
+		select MARKET_NUM marketNum, MARKET_Pw marketPw, MARKET_ID marketId, MARKET_NAME marketName, MARKET_ADDR marketAddr, MARKET_ADDR2 marketAddr2
+				, MARKET_POST marketPost, MARKET_REGI_DATE marketRegiDate, MARKET_PHONE marketPhone, MARKET_EMAIL marketEmail
+				, MARKET_BIRTH marketBirth, MARKET_ACCOUNT marketAccount, MARKET_BANK marketBank, MARKET_KIND marketKind
+		from market
+		where MARKET_NUM = #{marketNum}
+	</select>
+	
+	<update id="marketUpdate" parameterType="marketVO">
+		update market set MARKET_NAME=#{marketName}, MARKET_ADDR=#{marketAddr}, MARKET_ADDR2=#{marketAddr2}
+						, MARKET_POST=#{marketPost}, MARKET_PHONE=#{marketPhone}, MARKET_EMAIL=#{marketEmail}
+						, MARKET_ACCOUNT=#{marketAccount}, MARKET_BANK=#{marketBank}
+		where MARKET_NUM = #{marketNum}
+	</update>
+	
+	<delete id="marketDelete" parameterType="string">
+		delete market
+		where MARKET_NUM = #{marketNum}
+	</delete>
+	
+<select id ="marketAllSelect" resultType="marketVO" parameterType="string">
+select MARKET_NUM marketNum, MARKET_KIND marketKind, MARKET_REGI_DATE marketRegiDate,
+		MARKET_ID marketId, MARKET_Pw marketPw, MARKET_NAME marketName,
+		MARKET_POST marketPost, MARKET_ADDR marketAddr, MARKET_ADDR2 marketAddr2,
+		MARKET_PHONE marketPhone, MARKET_EMAIL marketEmail, MARKET_ACCOUNT marketAccount,
+		MARKET_BANK marketBank, MARKET_BIRTH marketBirth
+from market
+<if test="marketWord != null">
+where MARKET_NUM  like '%' || #{marketWord} || '%'  
+   or MARKET_ID   like '%' || #{marketWord} || '%'  
+   or MARKET_NAME like '%' || #{marketWord} || '%'
+   or MARKET_REGI_DATE like '%' || #{marketWord} || '%'
+</if>
+</select>
+
+<delete id="marketsDelete" parameterType="string">
+	delete from market
+	where MARKET_NUM in
+	<foreach collection="marketDels" item="marketNum" open="(" close=")" index="index" separator=",">
+		#{marketNum}
+	</foreach>
+</delete>
+
+<select id="marketOneDetail" parameterType="string" resultType="marketVO">
+		select MARKET_NUM marketNum, MARKET_Pw marketPw, MARKET_ID marketId, MARKET_NAME marketName, MARKET_ADDR marketAddr, MARKET_ADDR2 marketAddr2
+				, MARKET_POST marketPost, MARKET_REGI_DATE marketRegiDate, MARKET_PHONE marketPhone, MARKET_EMAIL marketEmail
+				, MARKET_BIRTH marketBirth, MARKET_ACCOUNT marketAccount, MARKET_BANK marketBank, MARKET_KIND marketKind
+		from market
+		where MARKET_NUM = #{marketNum}
+	</select>
+
+</mapper>

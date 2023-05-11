@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>상품상세정보페이지</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4 {font-family:"Lato", sans-serif}
+.mySlides {display:none}
+.w3-tag, .fa {cursor:pointer}
+.w3-tag {height:15px;width:15px;padding:0;margin-top:6px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#wishBtn").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=315, height=200, top = 100, left=100");
+		}else{
+			$.ajax({
+				type:'post',
+				url:"../goodsWishAdd",
+				dataType:"text",
+				data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+				success:function(result){
+					if(result.trim() == "1"){
+						$("#wishBtn").attr("src" , "/static/image/heart.png");
+					}else if(result.trim() == "0"){
+						$("#wishBtn").attr("src" , "/static/image/heart1.png");
+					}
+				},
+				error : function(){
+					alert("관리자는 사용할 수 없습니다.");
+				}
+			});
+		}
+		
+	});
+	$("#qty").click(function(){
+		$("#tot").text([[${goodsCommand.goodsPrice}]]  * $("#qty").val());
+	});
+	$("#cartAdd").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=315, height=200, top = 100, left=100");
+		}else{
+			$.ajax({
+				type:'post',
+				url:"/corner/cartAdd",
+				dataType:"text",
+				data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]","qty":$("#qty").val()},
+				success:function(result){
+					if(result.trim() == "1"){
+						alert("상품이 장바구니에 추가 되었습니다.");
+					}else{
+						alert("장바구니에 담기지 않았습니다.");
+					}
+				},
+				error : function(){
+					alert("에러입니다.");
+				}
+			});
+		}
+		
+	});
+	$("#review").click(function(){
+		$.ajax({
+			type : "get" ,
+			url : "/review/reviewList",
+			dataType : "html",
+			data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+			success : function(result){
+				$("#notice").html(result);
+			},
+			error : function(){
+				alert("상세 리뷰를 보고싶으면 로그인 하세요");
+				return false;
+			}
+		});
+	});
+	$("#descript").click(function(){
+		location.reload();
+	});
+});
+
+function inquire(){
+	
+	$.ajax({
+		type : "post" ,
+		url : "/inquire/inquireList",
+		dataType : "html",
+		data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]", "marketNum" : "[[${goodsCommand.marketNum}]]"},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("서버오류!!!!");
+			return false;
+		}
+	});
+}
+$(function(){
+	$("#cart").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=600, height=600, top = 100, left=100");
+		}else{
+			
+				location.href="/corner/cartList";
+			
+		}
+	});
+});
+</script>
+</head>
+<body>
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+  <div class="w3-row w3-large w3-light-grey">
+   <div class="w3-col s3">
+      <a class="w3-button w3-block"  href = "/"  style = "color: black"><b>Flobot</b></a>
+    </div>
+    <div class="w3-col s3">
+      <a class="w3-button w3-block" id = "cart">장바구니</a>
+    </div>
+    <div class="w3-col s3">
+    	<a class="w3-button w3-block" href="/register/agree">회원가입</a>
+    </div>
+    <div class="w3-col s3">
+      <th:block th:if="${session.authInfo != null}">
+	      <th:block th:if="${session.authInfo.grade == 'mem' or session.authInfo.grade == 'a'}">
+	      	<a class="w3-button w3-block" href="/register/memberDetail">내 정보보기</a>
+	      </th:block>
+       </th:block>
+             <th:block th:if="${session.authInfo == null}">
+		<a class="w3-button w3-block"  href="/market/marketInsert">입점신청</a>
+		</th:block>
+    </div>
+  </div>
+</div>
+<!-- 여기까지 -->
+
+<form action="/corner/buyItem" method="post">
+<input type="hidden" name='goodsNum' th:value="${goodsCommand.goodsNum}" />
+<!-- Content -->
+<div class="w3-content" style="max-width:1100px;margin-top:80px;margin-bottom:80px">
+
+  <div class="w3-panel">
+    <h1><b>[[${goodsCommand.goodsName}]]</b>
+    			<th:block th:if="${wish.trim() == '0'}">
+		    	<img src="/static/image/heart1.png"  id="wishBtn" width="40"/>
+		    	</th:block>
+		    	<th:block th:if="${wish.trim() == '1'}">
+		    	<img src="/static/image/heart.png"  id="wishBtn" width="40"/>
+		    	</th:block></h1>
+    
+  </div>
+
+<div class="w3-card w3-round w3-white">
+        <div class="w3-col l7 w3-container">
+         <p class="w3-center"><img th:src="|/goods/image/${goodsCommand.goodsMain}|" style="height:400px" alt="image"></p>
+         </div>
+          <div class="w3-col l5 w3-container">
+       <br /><br />
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice + '원'}]]</span>
+				  <span  th:if="${goodsCommand.goodsPrice == null}">상품준비중</span></p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>배송비 : <span th:if="${goodsCommand.deliveryCost == 0}">무료배송</span>
+					 <span th:if="${goodsCommand.deliveryCost != 0}">
+					 [[${#numbers.formatCurrency(goodsCommand.deliveryCost)}]]</span></p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>수량 : <input type="number" min=1 step="1" value="1" id="qty" name="qty" /></p>
+                 <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>총 상품금액 : <span id="tot"  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice + '원'}]]</span>
+						  <span id="tot" th:if="${goodsCommand.goodsPrice == null}">0원</span></p>
+						    <hr>
+		<input class="w3-button w3-orange w3-padding-large" type="button" value="장바구니"  id="cartAdd"/>
+		<input class="w3-button w3-blue w3-padding-large" type="submit" value="바로구매" />
+        </div>
+      </div>
+  
+  <!-- Grid -->
+  <div class="w3-row w3-container" align="center">
+
+    <div class="w3-col l4 m6 w3-grey w3-container w3-padding-16" id="descript">
+      <h3>제품 상세 설명(조회수 : [[${goodsCommand.visitCount}]])</h3>
+    </div>
+
+    <div class="w3-col l4 m6 w3-dark-grey w3-container w3-padding-16" id="review">
+      <h3>리뷰( <span th:if="${goodsCommand.reviewScore != null}">[[${goodsCommand.reviewScore}]] 점</span>
+								<span th:if="${goodsCommand.reviewScore == null}">등록된 리뷰가 없습니다.</span>)</h3>
+    </div>
+
+    <div class="w3-col l4 m6 w3-black w3-container w3-padding-16" id="inquire" onclick="inquire();">
+      <h3>상품문의</h3>
+    </div>
+    <div id="notice" >
+		<th:block  th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImage,'-')}">
+			<img th:src="|/goods/image/${goodsImage}|" width="1000px" /><br />
+		</th:block>	
+		<span th:utext="${#strings.replace(goodsCommand.goodsContent,newLineChar,'&lt;br /&gt;')}"></span>
+	</div>
+  </div>
+
+</form>
+<br/>
+<a href="/goods/goodsList">목록으로가기</a><br />
+<a href="/">메인으로가기</a>
+</body>
+</html>

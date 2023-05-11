@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flobot.Mapper.GoodsMapper">
+	<select id="goodsList" parameterType="string" resultType="goodsVO">
+		select g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
+				, GOODS_IMAGE goodsImage, GOODS_IMAGE_ORG goodsImageOrg, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
+				, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
+                , i.TOTAL_IPGO_QTY totalQty, i.goods_price goodsPrice
+		from goods g left outer join(SELECT GOODS_NUM, SUM(IPGO_QTY) AS TOTAL_IPGO_QTY, MAX(GOODS_PRICE) AS GOODS_PRICE 
+										FROM GOODS_IPGO 
+										GROUP BY GOODS_NUM) i
+		on g.goods_num = i.goods_num
+		<if test="userNum!=null">
+			where market_num = #{userNum}
+		</if>
+		order by g.goods_num desc
+	</select>
+	<insert id="goodsRegi" parameterType="goodsVO">
+		insert into goods(GOODS_NUM, GOODS_NAME, GOODS_CONTENT, GOODS_MAIN, GOODS_MAIN_ORG, GOODS_IMAGE, GOODS_IMAGE_ORG
+							, DELIVERY_COST, MANUFACTURER, VISIT_COUNT, MARKET_NUM, GOODS_KIND)
+		values(#{goodsNum}, #{goodsName}, #{goodsContent}, #{goodsMain}, #{goodsMainOrg}, #{goodsImage}, #{goodsImageOrg}
+				, #{deliveryCost}, #{manufacturer}, 0, #{marketNum}, #{goodsKind})
+	</insert>
+	<select id="goodsCreateNum" resultType="string">
+		select concat('goods',nvl(max(substr(goods_Num,6)),100000) + 1)
+		from goods
+	</select>
+	<select id="goodsInfo" parameterType="string" resultType="goodsVO">
+		select g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
+				, GOODS_IMAGE goodsImage, GOODS_IMAGE_ORG goodsImageOrg, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
+				, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
+                , i.TOTAL_IPGO_QTY totalQty
+		from goods g left outer join(SELECT GOODS_NUM, SUM(IPGO_QTY) AS TOTAL_IPGO_QTY FROM GOODS_IPGO GROUP BY GOODS_NUM ) i
+		on g.goods_num = i.goods_num
+		where g.goods_num=#{goodsNum}
+	</select>
+	<delete id="goodsDelete" parameterType="string">
+		delete goods where goods_num = #{goodsNum}
+	</delete>
+	
+	<delete id="marketDelete" parameterType="string">
+		delete goods where market_Num = #{marketNum}
+	</delete>
+	
+	<update id="goodsUpdate">
+		update goods set GOODS_NAME=#{goodsName},GOODS_CONTENT=#{goodsContent}, GOODS_MAIN=#{goodsMain}, GOODS_MAIN_ORG=#{goodsMainOrg}
+						, GOODS_IMAGE=#{goodsImage}, GOODS_IMAGE_ORG=#{goodsImageOrg}, DELIVERY_COST=#{deliveryCost}
+						, MANUFACTURER=#{manufacturer}, GOODS_KIND=#{goodsKind}
+		where goods_num=#{goodsNum}
+	</update>
+	
+	<select id="goodsListselect" resultType="goodsVO" parameterType="string" >
+	select g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
+				, GOODS_IMAGE goodsImage, GOODS_IMAGE_ORG goodsImageOrg, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
+				, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
+                , i.TOTAL_IPGO_QTY totalQty, i.goods_price goodsPrice
+               	, r.count reviewCount, r.avg reviewScore
+		from goods g left outer join(SELECT GOODS_NUM, SUM(IPGO_QTY) AS TOTAL_IPGO_QTY, MAX(GOODS_PRICE) AS GOODS_PRICE 
+										FROM GOODS_IPGO 
+										GROUP BY GOODS_NUM) i
+		on g.goods_num = i.goods_num left outer join (select count(review_num) count , avg(review_score) avg, goods_num from review group by GOODS_NUM) r
+		on g.goods_num = r.goods_num
+		
+		where g.goods_num = #{goodsNum}
+	</select>
+	
+	<select id = "goodsWishListselect" resultType = "goodsVO" parameterType="wishVO">
+	select g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
+					, GOODS_IMAGE goodsImage, GOODS_IMAGE_ORG goodsImageOrg, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
+					, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
+					, w.MEMBER_NUM memberNum
+		  from goods g left outer join wish w
+		  on g.goods_num = w.goods_num
+		  where w.member_num = #{memberNum}
+	</select>
+
+	<update id="visitAdd" parameterType="string">
+		update goods set VISIT_COUNT = VISIT_COUNT+1
+		where goods_num = #{goodsNum}
+	</update>
+</mapper>

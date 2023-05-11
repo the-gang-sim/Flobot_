@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#frm").submit(function(){
+		if(  $("input:checkbox[name=memDels]:checked").length < 1 ){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+	/// 체크박스를 모두 체크하거나 체크를 없앨 때 
+	$("#checkBoxs").click(function(){
+		if ($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=memDels]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=memDels]").prop("checked",false);
+		}
+	});
+	$("input:checkbox[name=memDels]").click(function(){
+		var tot = $("input:checkbox[name=memDels]").length;
+		var checked = $("input:checkbox[name=memDels]:checked").length;
+		if (tot == checked){
+			$("#checkBoxs").prop("checked", true)
+		}else{
+			$("#checkBoxs").prop("checked", false)
+		}
+	});
+});
+</script>
+</head>
+<body>
+회원목록<br />
+<form action="memberList" >
+회원 검색 : <input type="search" name="memberWord" size=50 th:value="${memberWord}"/>
+		    <input type="submit" value="검색" />
+</form>
+<br/>
+<form action="membersDelete" id="frm">
+<table border=1 width=600px>
+<tr><td>회원번호</td><td>회원아이디</td><td>회원이름</td><td>등록일</td><td>연락처</td>
+	<td><input type="submit" value="삭제" />
+		<input type="checkbox" id="checkBoxs" />
+	</td>
+</tr>
+
+<tr th:each="memberVO : ${list}">
+	<td><a th:href="|memberDetail?memberNum=${memberVO.memberNum}|">[[${memberVO.memberNum}]]</a></td>
+	<td>[[${memberVO.memberId}]]</td>
+	<td>[[${memberVO.memberName}]]</td>
+	<td>[[${#dates.format(memberVO.memberRegiDate,'yyyy-MM-dd')}]]</td>
+	<td>[[${memberVO.memberPhone}]]</td>
+	<td><input type="checkbox" name="memDels" th:value="${memberVO.memberNum}"/></td>
+</tr>
+</table>
+</form>
+
+<br/>
+<a href="memberRegist">회원 등록</a><br />
+<a href="/">메인으로가기</a>
+</body>
+</html>

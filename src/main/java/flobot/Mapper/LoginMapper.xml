@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flobot.Mapper.LoginMapper">
+	<select id="login" parameterType="string" resultType="authInfoVO">
+		select member_id userId, member_num userNum, member_Pw userPw, member_name userName
+		<if test="memberId!='admin'">
+			, 'mem' grade
+		</if>
+		<if test="memberId=='admin'">
+			, grade grade
+		</if>
+		from member
+		where member_id = #{userId}
+		union
+		select market_id 		, market_num 		, market_pw 		, market_name 		, 'mar' 
+		from market
+		where market_id = #{userId}
+	</select>
+	<select id="resetPw" resultType="memVO">
+		select MEMBER_NUM memberNum,MEMBER_ID memberId,MEMBER_PW memberPw
+		      ,MEMBER_NAME memberName,MEMBER_ADDR memberAddr
+		      ,MEMBER_ADDR2 memberAddr2,MEMBER_POST memberPost
+	          ,MEMBER_REGI_DATE memberRegiDate,MEMBER_GENDER memberGender
+	          ,MEMBER_PHONE memberPhone,MEMBER_EMAIL memberEmail
+	          ,MEMBER_BIRTH memberBirth, MEMBER_MARRIED memberMarried
+	    from member
+	    where MEMBER_EMAIL = #{userEmail}
+	</select>
+	<update id="updatePw" parameterType="string">
+		update Member set member_pw=#{memberPw}
+		where member_Num = #{memberNum}
+	</update>
+	
+	<select id="findId" resultType="memVO">
+		select member_phone memberPhone, member_id memberId
+		from member
+		where member_name = #{userName}
+	</select>
+</mapper> 

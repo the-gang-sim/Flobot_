@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<style>
+html,body,h1,h2,h3,h4 {font-family:"Lato", sans-serif}
+.mySlides {display:none}
+.w3-tag, .fa {cursor:pointer}
+.w3-tag {height:15px;width:15px;padding:0;margin-top:6px}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+body{
+
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:15px;
+    background-color: #f5f6f7;
+    line-height: 1.5em;
+    color : #222;
+    margin: 0;
+}
+.member input[type=button]{
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+	outline: none;
+	border-radius: 10px;
+	background: yellow;
+	color: black;
+	font-size: 15px;
+	letter-spacing: 2px;
+	
+}
+.login_id input {
+	width: 100%;
+	height: 50px;
+	border-radius: 10px;
+	margin-top: 0px;
+	padding: 0px 20px;
+	border: 1px solid lightgray;
+	outline: none;
+}
+
+.submit input {
+	border-radius: 10px;
+	background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+	color: white;
+	border: 0px;
+	font-size: 1.2em;
+	letter-spacing: 2px;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+const formatter = new Intl.NumberFormat('ko-KR', {
+	  style: 'currency',
+	  currency: 'KRW',
+});
+$(function(){
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input[name=purChk]").prop("checked",true);
+		}else{
+			$("input[name=purChk]").prop("checked",false);
+		}
+		prodChk();
+	});
+	$("input[name=purChk]").click(function(){
+		var tot = $("input[name=purChk]").length;
+		var checked =  $("input[name=purChk]:checked").length;
+		if(tot != checked) $("#checkBoxs").prop("checked", false);
+		else $("#checkBoxs").prop("checked", true);
+		prodChk();
+	});
+	prodChk();
+});
+
+function prodChk(){
+	var chk  = $("input[name=purChk]");
+	var cnt = 0;
+	var totalPrice = 0;
+	for(var i = 0; i < chk.length ; i++){
+		if(chk[i].checked == true){
+			cnt++;
+			totalPrice += 
+				Number($(".cartPrice:eq("+i+")").text().replace("₩","").replace(",",""))*Number($(".qty:eq("+i+")").text().replace(",",""));
+			
+		}
+	}
+	$("#prodCnt").text(cnt + '개');
+	$("#tot").text(formatter.format(totalPrice) +'원');
+}
+
+function goodsCartAdd(goodsNum){
+	$.ajax({
+		type:"post",
+		url:"cartAdd",
+		dataType:"text",
+		data : {"goodsNum": goodsNum, "qty" : 1},
+		success:function(result){
+			if(result.trim() == "1"){
+				var price = Number($("#price"+goodsNum).text().replace("₩","").replace(",","")) / Number($("#"+goodsNum).text());
+				$("#"+goodsNum).text(Number($("#"+goodsNum).text()) + 1);
+				
+				prodChk();
+			}else{
+				alert("수량이 추가되지 않았습니다.");
+			}
+		},
+		error:function(){
+			alert("서버 오류!!!!!");
+		}
+	});
+}
+function checkQty(goodsNum){
+	console.log(goodsNum);
+	if($("#"+goodsNum).text() > 1  ){
+		$.ajax({
+			type:"post",
+			dataType:"text",
+			url:"CartDown",
+			data:{"goodsNum" : goodsNum},
+			success:function(result){
+				if(result.trim() == "1"){
+					var price = Number($("#price"+goodsNum).text().replace("₩","").replace(",","")) / Number($("#"+goodsNum).text());
+					$("#"+goodsNum).text(Number($("#"+goodsNum).text()) - 1);
+					window.self.reload();
+				}else{
+					alert("수량이 감소되지 않았습니다.")
+				}
+			},
+			error:function(){
+				alert("서버 오류!!!!!");
+			}
+		});
+	}else{
+		alert("최소수량은 1이어야 합니다.")
+	}
+}
+$(function(){
+	$("#cart").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=600, height=600, top = 100, left=100");
+		}else{
+			
+				location.href="/corner/cartList";
+			
+		}
+	});
+});
+function myAccFunc(kind) {
+	  var x = document.getElementById(kind);
+	  if (x.className.indexOf("w3-show") == -1) {
+	    x.className += " w3-show";
+	  } else {
+	    x.className = x.className.replace(" w3-show", "");
+	  }
+	}
+function w3_open() {
+	  document.getElementById("mySidebar").style.display = "block";
+	  document.getElementById("myOverlay").style.display = "block";
+	}
+	 
+	function w3_close() {
+	  document.getElementById("mySidebar").style.display = "none";
+	  document.getElementById("myOverlay").style.display = "none";
+	}
+</script>
+</head>
+<body>
+<!-- Links (sit on top) -->
+<div class="w3-top" >
+  <div class="w3-row w3-large w3-light-grey">
+   <div class="w3-col s3">
+      <a class="w3-button w3-block"  href = "/"  style = "color: black"><b></b></a>
+    </div>
+    <div class="w3-col s3">
+      <a class="w3-button w3-block" href="/corner/wishList">찜 목록</a>
+    </div>
+    <div class="w3-col s3">
+    	<a class="w3-button w3-block" href="/purchase/orderList">주문내역</a>
+    </div>
+    <div class="w3-col s3">
+	  <a class="w3-button w3-block" href="/register/memberDetail">내 정보보기</a>
+    </div>
+  </div>
+</div>
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px;display:block" id="mySidebar"  > 
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+    <h3 class="w3-wide"><a href = "/" style = "color: black"><b>Flobot</b></a></h3> 
+  </div>
+  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+  <a onclick="myAccFunc('flower')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+    꽃<i class="fa fa-caret-down"></i> 
+    </a>
+    <div id="flower" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+    	<a href="/search/goodsSearch?keyword=flower"><input type="button" value="꽃1" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=장미"><input type="button" value="꽃2" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=튤립"><input type="button" value="꽃3" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=하얀"><input type="button" value="꽃4" class="w3-bar-item w3-button"></a>
+    </div>
+    <a onclick="myAccFunc('hub')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+    허브<i class="fa fa-caret-down"></i> 
+    </a>
+    <div id="hub" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+    	<a href="/search/goodsSearch?keyword=herb"><input type="button" value="허브1" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=민트"><input type="button" value="허브2" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=로즈"><input type="button" value="허브3" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=허브"><input type="button" value="허브4" class="w3-bar-item w3-button"></a>
+    </div>
+    <a onclick="myAccFunc('da62')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+      다육이 <i class="fa fa-caret-down"></i> 
+    </a>
+    <div id="da62" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+   		<a href="/search/goodsSearch?keyword=fleshy"><input type="button" value="다육이1" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=다육"><input type="button" value="다육이2" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=이상"><input type="button" value="다육이3" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=세트"><input type="button" value="다육이4" class="w3-bar-item w3-button"></a>
+    </div>
+    <a onclick="myAccFunc('tree')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+      나무 <i class="fa fa-caret-down"></i> 
+    </a>
+    <div id="tree" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+    	<a href="/search/goodsSearch?keyword=tree"><input type="button" value="나무1" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=나무"><input type="button" value="나무2" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=소"><input type="button" value="나무3" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=은행"><input type="button" value="나무4" class="w3-bar-item w3-button"></a>
+    </div>
+    <a onclick="myAccFunc('seed')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+      씨앗 <i class="fa fa-caret-down"></i> 
+    </a>
+    <div id="seed" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+    	<a href="/search/goodsSearch?keyword=seed"><input type="button" value="씨앗1" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=씨"><input type="button" value="씨앗2" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=해바"><input type="button" value="씨앗3" class="w3-bar-item w3-button"></a>
+    	<a href="/search/goodsSearch?keyword=배추"><input type="button" value="씨앗4" class="w3-bar-item w3-button"></a>
+    </div>
+  </div>
+</nav>	<br /><br /><hr/>
+<form action="/search/goodsSearch">
+<div align="right">
+  <div class="login_id" style="    display: inline;">
+  <input type="text" name="keyword" th:value="${keyword}" id="search" style = "width:300px;height:35px"/>
+  </div>
+  <div class="submit" style="    display: inline;">
+  <input type="submit" value="검색" style = "height:35px" />
+  <a href="/search/image"><img src="/static/image/smartphone.png" width="35"></a>
+  </div>
+</div>
+<hr/>
+</form>	
+<div  align="center" width="950" class="member">
+<form action="/purchase/goodsBuy">
+	<table  width="800" >
+		<tr ><th colspan="6"> &nbsp; <input type="checkbox" id="checkBoxs" checked="checked"/>  &nbsp; 전체 선택</th></tr>
+		<tr th:each="vo,idx:${list}" align="center">
+			<td><input type="checkbox" id="purChk" name="purChk" th:value="${vo.goodsNum}" checked="checked"/></td>
+			<td width="200" ><img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="150"/></td>
+			<td>[[${vo.goodsName}]]</td>
+			<td><a th:href="|javascript:checkQty('${vo.goodsNum}')|">[ - ]</a>
+				<span class="qty" th:id="${vo.goodsNum}">[[${vo.qty}]]</span>
+			    <a th:href="|javascript:goodsCartAdd('${vo.goodsNum}')|" >[ + ]</a></td>
+			<td><span class="cartPrice" th:id="${'price'+vo.goodsNum}"><img src="/static/image/cost.jpg" width="15" /> [[${vo.goodsPrice}]] ₩</td>
+			<td><img src="/static/image/deli.png" width="15" /> [[${vo.deliveryCost}]] ₩</td>
+		</tr>
+		<tr><td colspan="5" align="right">총 구매비용 : <span id="tot"></span></td><td><input type="submit" value="구매하기" /></td></tr>
+	</table>
+</form>
+</div>
+</body>
+</html>

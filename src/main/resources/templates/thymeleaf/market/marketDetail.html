@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+입점 업체 상세정보 페이지<br/>
+
+<table border="1" width="600">
+		<tr>
+			<th>구분</th><th>입력</th>
+		</tr>
+		<tr>
+			<td>사업자등록번호</td><td>[[${marketCommand.marketNum}]]</td>
+		</tr>
+		<tr>
+			<td>사업자등록업종</td><td>[[${marketCommand.marketKind}]]</td>
+		</tr>
+		<tr>
+			<td>사업자등록일</td><td>[[${#dates.format(marketCommand.marketRegiDate,'yyyy-MM-dd')}]]</td>
+		</tr>
+		<tr>
+			<td>마켓아이디</td><td>[[${marketCommand.marketId}]]</td>
+		</tr>
+		<tr>
+			<td>마켓입점일</td><td>[[${#dates.format(marketCommand.marketBirth,'yyyy-MM-dd')}]]</td>
+		</tr>
+		<tr>
+			<td>마켓이름</td><td>[[${marketCommand.marketName}]]</td>
+		</tr>
+		<tr>
+			<td>우편번호</td><td>[[${marketCommand.marketPost}]]</td>
+		</tr>
+		<tr>
+			<td>마켓주소</td><td>[[${marketCommand.marketAddr}]]</td>
+		</tr>
+		<tr>
+			<td>상세주소</td><td>[[${marketCommand.marketAddr2}]]</td>
+		</tr>
+		<tr>
+			<td>마켓연락처</td><td>[[${marketCommand.marketPhone}]]</td>
+		</tr>
+		<tr>
+			<td>마켓이메일</td><td>[[${marketCommand.marketEmail}]]</td>
+		</tr>
+		<tr>
+			<td>정산계좌번호</td><td>[[${marketCommand.marketAccount}]]</td>
+		</tr>
+		<tr>
+			<td>정산거래은행</td><td>[[${marketCommand.marketBank}]]</td>
+		</tr>
+		
+	</table>
+	<br/>
+	<a href = "marketList">입점 업체 목록</a>
+
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="./login.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	function register() {
+		opener.location.href="/register/agree";
+		window.self.close();
+	}
+</script>
+
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+li {
+	list-style: none;
+}
+
+.wrap {
+	width: 600px;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.login {
+	width: 600px;
+	height: 600px;
+	background: white;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+h2 {
+	color: tomato;
+	font-size: 2em;
+}
+
+.login_id {
+	margin-top: 20px;
+	width: 80%;
+}
+
+.login_id input {
+	width: 100%;
+	height: 50px;
+	border-radius: 30px;
+	margin-top: 10px;
+	padding: 0px 20px;
+	border: 1px solid lightgray;
+	outline: none;
+}
+
+.login_pw {
+	margin-top: 20px;
+	width: 80%;
+}
+
+.login_pw input {
+	width: 100%;
+	height: 50px;
+	border-radius: 30px;
+	margin-top: 10px;
+	padding: 0px 20px;
+	border: 1px solid lightgray;
+	outline: none;
+}
+
+.login_etc {
+	padding: 10px;
+	width: 80%;
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+}
+
+.submit {
+	margin-top: 50px;
+	width: 80%;
+}
+
+.submit input {
+	width: 100%;
+	height: 50px;
+	border: 0;
+	outline: none;
+	border-radius: 40px;
+	background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+	color: white;
+	font-size: 1.2em;
+	letter-spacing: 2px;
+}
+</style>
+</head>
+<body>
+	<form th:action="@{/login/item.login}" method="post" th:object=${loginCommand}>
+		<div class="wrap">
+			<div class="login">
+				<h2>Log-in</h2>
+
+
+
+				<div class="login_id">
+					<h4>아이디</h4>
+					<input type="text" name="userId" placeholder="아이디"><span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}")></span>
+				</div>
+				
+				<div class="login_pw">
+					<h4>비밀번호</h4>
+					<input type="password" name="userPw"  placeholder="비밀번호"><span th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}")></span>
+				</div>
+				
+				<div class="login_etc">
+					<div class="checkbox">
+						<input type="checkbox" name="rememId" th:checked="${session.rememId != null && session.rememId}">아이디 저장
+						<br /> <input type="checkbox" name="rememLogin"/>로그인유지하기
+					</div>
+
+
+					<div class="forgot_pw">
+						<p onclick="register();" id="register">회원 가입</p>
+					</div>
+
+					<div class="forgot_pw">
+						<a href="/login/findId">아이디 찾기</a> <br /> <a href="/login/resetPw">비밀번호 찾기</a>
+
+					</div>
+
+
+				</div>
+				<div class="submit">
+					<input type="submit" value="로그인">
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

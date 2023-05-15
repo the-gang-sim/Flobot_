@@ -79,6 +79,23 @@ public class SearchController {
 		System.out.println(result);
 		file.delete();
 		model.addAttribute("flower", result);
+		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\"";
+	    Process process;
+		try {
+			process = Runtime.getRuntime().exec(command);
+
+		    // 실행 결과 확인 (선택사항)
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		    String line;
+		    while ((line = reader.readLine()) != null) {
+		        System.out.println(line);
+		    }
+		    reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return "thymeleaf/search/flower";
 	}
 }

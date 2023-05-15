@@ -3,10 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+input[type=button] {
+	width: 100px;
+	height: 50px;
+	border: 0;
+	outline: none;
+	border-radius: 10px;
+	background: gray;
+	color: white;
+	font-size: 1.2em;
+	letter-spacing: 2px;
+}
+
+
+</style>
+
 </head>
 <body>
-[[${flower}]]
+<div align = "center">
+검색 결과 <br/>
+</div>
 
-<a th:href="|/search/goodsSearch?keyword=${flower}|">바로가기</a>
+<div>
+<img th:src="|/static/image/${list[0].flowerImage}.jpg|" /> <br/>
+꽃 이름 : [[${list[0].flowerName}]] <br/>
+
+
+설명 : [[${list[0].flowerContent}]] <br/><br/>
+
+
+<a th:href="|/search/goodsSearch?keyword=${list[0].flowerName}|"><input type="button" value="상품구매 바로가기"></a>
+</div>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

@@ -21,7 +21,7 @@ public class GoodsSearchService {
 		int stratRow;
 		int endRow;
 		double count = searchMapper.goodsCount(keyword);
-		int maxPage = (int)((double)count / limit + 0.99);
+		int maxPage = (int)((double)count / limit + 1);
 		int startPage =  (int)((double) page / limitPage + 0.95 -1 ) * limitPage + 1;  
 		int endPage = startPage + limitPage - 1; 
 		stratRow = (page - 1) *  limit + 1;

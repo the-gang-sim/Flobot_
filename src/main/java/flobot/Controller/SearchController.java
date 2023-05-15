@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import flobot.Command.LoginCommand;
 import flobot.Service.Goods.GoodsSearchService;
+import flobot.Service.Search.ImageService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -48,6 +49,8 @@ public class SearchController {
 		return "thymeleaf/search/imgSearch";
 	}
 	
+	@Autowired
+	ImageService imageService;
 	@PostMapping("/image")
 	public String imgSearch(LoginCommand loginCommand,@RequestParam(value="searchImg")MultipartFile searchImg,HttpSession session, Model model) {
 		String filedir = "C:/Flobot/image";
@@ -72,14 +75,14 @@ public class SearchController {
 			    sb.append(line);
 			    sb.append("\n");
 			}
-			result = sb.toString().split("step")[1];
+			result = sb.toString().split("step")[1].replace("\n", "");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(result);
 		file.delete();
 		model.addAttribute("flower", result);
-		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\"";
+		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\""; // 작업스케줄러 실행
 	    Process process;
 		try {
 			process = Runtime.getRuntime().exec(command);
@@ -95,7 +98,8 @@ public class SearchController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		imageService.execute(model, result);
 		return "thymeleaf/search/flower";
 	}
 }

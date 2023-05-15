@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import flobot.domain.FlowerVO;
 import flobot.domain.GoodsVO;
 import flobot.domain.PageVO;
 
@@ -13,5 +14,7 @@ public interface SearchMapper {
 	public List<GoodsVO> goodsSearch(PageVO vo);
 
 	public Integer goodsCount(String keyword);
+	
+	public List<FlowerVO> imageSearch(String result);
 
 }

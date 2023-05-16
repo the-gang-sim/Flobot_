@@ -50,33 +50,76 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <script type="text/javascript">
 
 google.charts.load('current', {'packages':['line']});
-google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawChart1);
+google.charts.setOnLoadCallback(drawChart2);
+google.charts.setOnLoadCallback(drawChart3);
 
-function drawChart() {
+function drawChart1() {
 
-var data = new google.visualization.DataTable();
-data.addColumn('number', '분기');
-data.addColumn('number', '매출액');
-data.addColumn('number', '영업이익');
-data.addColumn('number', '매출 총 이익');
-
-
-data.addRows([[${stat}]]);
-
-var options = {
-  chart: {
-    title: 'Box Office Earnings in First Two Weeks of Opening',
-    subtitle: 'in millions of dollars (USD)'
-  },
-  width: 900,
-  height: 500
-};
-
-var chart = new google.charts.Line(document.getElementById('linechart_material'));
-
-chart.draw(data, google.charts.Line.convertOptions(options));
+	var data = new google.visualization.DataTable();
+	data.addColumn('number', '분기');
+	data.addColumn('number', '매출액');
+	
+	
+	data.addRows([[${statSales}]]);
+	
+	var options = {
+	  chart: {
+	    title: '매출액',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+	
+	var chart = new google.charts.Line(document.getElementById('linechart_material'));
+	
+	chart.draw(data, google.charts.Line.convertOptions(options));
 }
+function drawChart2() {
 
+	var data = new google.visualization.DataTable();
+	data.addColumn('number', '분기');
+	data.addColumn('number', '영업이익');
+
+
+	data.addRows([[${statProfit}]]);
+
+	var options = {
+	  chart: {
+	    title: '영업이익',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+
+	var chart2 = new google.charts.Line(document.getElementById('linechart_material2'));
+
+	chart2.draw(data, google.charts.Line.convertOptions(options));
+}
+function drawChart3() {
+
+	var data = new google.visualization.DataTable();
+	data.addColumn('number', '분기');
+	data.addColumn('number', '매출 총 이익');
+
+
+	data.addRows([[${statTotPorfit}]]);
+
+	var options = {
+	  chart: {
+	    title: '매출 총 이익',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+
+	var chart3 = new google.charts.Line(document.getElementById('linechart_material3'));
+
+	chart3.draw(data, google.charts.Line.convertOptions(options));
+}
 
 
 
@@ -347,7 +390,12 @@ $(function(){
 <div id = "linechart_material" >
 
 </div>
+<div id = "linechart_material2" >
 
+</div>
+<div id = "linechart_material3" >
+
+</div>
 
 </div>
 

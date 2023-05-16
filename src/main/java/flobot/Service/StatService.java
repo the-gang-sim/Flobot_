@@ -21,14 +21,25 @@ public class StatService {
 		AuthInfoVO authInfo = (AuthInfoVO) session.getAttribute("authInfo");
 		List<StatVO> list = new ArrayList<StatVO>();
 		String i = "[";
+		String j = "[";
+		String k = "[";
 		if(authInfo != null) {
 			list = marketMapper.statList(authInfo.getUserNum());
 			for(StatVO vo : list) {
-				i += "["+vo.getStatYear()+"."+vo.getStatQut()+"분기,"+vo.getStatSales()+","+vo.getStatProfit()+","+vo.getStatTotprofit()+"],";
+				i += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatSales()+"],";
+				j += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatProfit()+"],";
+				k += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatTotprofit()+"],";
 			}
-			i +="]";
+			i=i.substring(0,i.lastIndexOf(","));
+			j=j.substring(0,j.lastIndexOf(","));
+			k=k.substring(0,k.lastIndexOf(","));
 		}
-		model.addAttribute("stat", i);
+		i +="]";
+		j +="]";
+		k +="]";
+		model.addAttribute("statSales", i);
+		model.addAttribute("statProfit", j);
+		model.addAttribute("statTotPorfit", k);
 		
 	}
 

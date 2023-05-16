@@ -45,9 +45,26 @@ body{
 	letter-spacing: 2px;
 }
 
-div#notice2 {
-    background-color: red;
+/* div#notice2{ */
+/*     background-color: red; */
+/* } */
+
+button#noticebutton {
+	background-color: tomato;
+	border-radius: 10px;
+	color: white;
+	width: 70px;
+	height: 40px;
 }
+
+button#noticebutton2 {
+	background-color: bisque;
+	border-radius: 10px;
+	width: 70px;
+	height: 40px;
+	
+}
+
 
 </style>
 
@@ -98,6 +115,9 @@ function drawChart2() {
 	data.addRows([[${statProfit}]]);
 
 	var options = {
+		series: {
+			0: { color: '#FE9A2E' }
+		},
 	  chart: {
 	    title: '영업이익',
 	    subtitle: '1만원'
@@ -120,6 +140,9 @@ function drawChart3() {
 	data.addRows([[${statTotPorfit}]]);
 
 	var options = {
+		series: {
+			0: { color: '#a561bd' }
+		},
 	  chart: {
 	    title: '매출 총 이익',
 	    subtitle: '1만원'
@@ -194,8 +217,10 @@ $(function(){
 			dataType : "html",
 			success : function(result){
 				$("#notice").html(result);
-				$("#notice2").css("backgroundColor", "black");
-				$("#table").css("backgroundColor", "red");
+				$("#noticebutton").css("backgroundColor", "bisque");
+				$("#noticebutton").css("color", "black");
+				$("#noticebutton2").css("backgroundColor", "tomato");
+				$("#noticebutton2").css("color", "white");
 			},
 			error : function(){
 				alert("상세 리뷰를 보고싶으면 로그인 하세요");
@@ -450,18 +475,21 @@ $(function(){
 
 <th:block th:if="${session.authInfo.grade == 'mar'}">
 
+<div align = "center">
 <div id = "table" style = "display:inline" align = "center">
-표
+<button type="button" id = "noticebutton2">표</button>
 </div>
 
 <div id = "notice2" style = "display:inline" align = "center">
-그래프
+<button type="button" id = "noticebutton">그래프</button>
 
+</div>
 </div>
 
 
 
 <div align="center" id="notice">
+<br/>
 차트 <br/>
 
 [[${stat}]]

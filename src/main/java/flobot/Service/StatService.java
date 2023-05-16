@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.kenai.jffi.Array;
-
 import flobot.Mapper.MarketMapper;
 import flobot.domain.AuthInfoVO;
 import flobot.domain.StatVO;
@@ -21,20 +19,16 @@ public class StatService {
 	public void execute(Model model, HttpSession session) {
 		
 		AuthInfoVO authInfo = (AuthInfoVO) session.getAttribute("authInfo");
-		
 		List<StatVO> list = new ArrayList<StatVO>();
-		Object [][] i ;
+		String i = "[";
 		if(authInfo != null) {
 			list = marketMapper.statList(authInfo.getUserNum());
 			for(StatVO vo : list) {
-				System.out.println(vo);
+				i += "["+vo.getStatYear()+"."+vo.getStatQut()+"분기,"+vo.getStatSales()+","+vo.getStatProfit()+","+vo.getStatTotprofit()+"],";
 			}
+			i +="]";
 		}
-		
-		model.addAttribute("stat", list);
-		
-		
-		
+		model.addAttribute("stat", i);
 		
 	}
 

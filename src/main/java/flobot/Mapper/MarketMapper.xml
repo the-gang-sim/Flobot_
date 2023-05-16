@@ -60,5 +60,13 @@ where MARKET_NUM  like '%' || #{marketWord} || '%'
 		from market
 		where MARKET_NUM = #{marketNum}
 	</select>
+	
+	<select id="statList" parameterType="string" resultType="statVO">
+	select stat_year statYear, stat_qut statQut,
+			stat_sales statSales, stat_profit statProfit,  stat_tot_profit statTotprofit 
+	from stat
+	where market_Num = #{userNum} 
+	
+	</select>
 
 </mapper>

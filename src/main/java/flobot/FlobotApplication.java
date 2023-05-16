@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import flobot.Command.LoginCommand;
 import flobot.Service.CookiesService;
+import flobot.Service.StatService;
 import flobot.Service.Goods.GoodsListService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class FlobotApplication {
 	GoodsListService goodsListService;
 	@Autowired
 	CookiesService cookiesService;
+	@Autowired
+	StatService statService;
 	
 	@ModelAttribute
 	public LoginCommand loginCommand() {
@@ -40,6 +43,7 @@ public class FlobotApplication {
 	public String index(Model model, HttpSession session, HttpServletRequest request) {
 		goodsListService.execute(model, session);
 		cookiesService.execute(request, model);
+		statService.execute(model, session);
 		return "thymeleaf/flobot";
 	}
 	

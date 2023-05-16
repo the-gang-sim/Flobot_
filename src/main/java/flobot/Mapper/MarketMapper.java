@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import flobot.domain.MarketVO;
 import flobot.domain.MemberVO;
+import flobot.domain.StatVO;
 
 @Mapper
 public interface MarketMapper {
@@ -23,5 +24,7 @@ public interface MarketMapper {
 	public Integer marketsDelete(String marketDels []);
 	
 	public MarketVO marketOneDetail(String marketNum);
+
+	public List<StatVO> statList(String userNum);
 	
 }

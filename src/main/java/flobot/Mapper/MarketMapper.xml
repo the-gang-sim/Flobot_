@@ -65,8 +65,9 @@ where MARKET_NUM  like '%' || #{marketWord} || '%'
 	select stat_year statYear, stat_qut statQut,
 			stat_sales statSales, stat_profit statProfit,  stat_tot_profit statTotprofit 
 	from stat
+	<if test="userNum != null">
 	where market_Num = #{userNum} 
-	
+	</if>
 	</select>
 
 </mapper>

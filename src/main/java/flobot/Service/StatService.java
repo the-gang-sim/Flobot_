@@ -25,14 +25,16 @@ public class StatService {
 		String k = "[";
 		if(authInfo != null) {
 			list = marketMapper.statList(authInfo.getUserNum());
-			for(StatVO vo : list) {
-				i += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatSales()+"],";
-				j += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatProfit()+"],";
-				k += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatTotprofit()+"],";
+			if(authInfo.getGrade().equals("mar")) {
+				for(StatVO vo : list) {
+					i += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatSales()+"],";
+					j += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatProfit()+"],";
+					k += "["+vo.getStatYear().substring(2)+"."+vo.getStatQut()+","+vo.getStatTotprofit()+"],";
+				}
+				i=i.substring(0,i.lastIndexOf(","));
+				j=j.substring(0,j.lastIndexOf(","));
+				k=k.substring(0,k.lastIndexOf(","));
 			}
-			i=i.substring(0,i.lastIndexOf(","));
-			j=j.substring(0,j.lastIndexOf(","));
-			k=k.substring(0,k.lastIndexOf(","));
 		}
 		i +="]";
 		j +="]";

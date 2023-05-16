@@ -43,6 +43,7 @@ where MARKET_NUM  like '%' || #{marketWord} || '%'
    or MARKET_NAME like '%' || #{marketWord} || '%'
    or MARKET_REGI_DATE like '%' || #{marketWord} || '%'
 </if>
+order by market_num desc
 </select>
 
 <delete id="marketsDelete" parameterType="string">
@@ -69,5 +70,11 @@ where MARKET_NUM  like '%' || #{marketWord} || '%'
 	where market_Num = #{userNum} 
 	</if>
 	</select>
-
+	<select id="adminStat" parameterType="string" resultType="statVO">
+		select rownum rn, stat_year statYear, stat_qut statQut,
+			stat_sales statSales, stat_profit statProfit,  stat_tot_profit statTotprofit , market_num marketNum
+		from stat
+		where stat_qut =#{statQut}
+		order by market_num desc
+	</select>
 </mapper>

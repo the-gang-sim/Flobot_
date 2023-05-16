@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#frm").submit(function(){
@@ -30,6 +31,22 @@ $(function(){
 		}
 	});
 });
+function btn(qut){
+	$.ajax({
+		type : "get" ,
+		url : "/admin/chart",
+		dataType : "html",
+		data:{"qut" : qut},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("상세 리뷰를 보고싶으면 로그인 하세요");
+			return false;
+		}
+	});
+};
+
 </script>
 </head>
 <body>
@@ -41,13 +58,14 @@ $(function(){
 <br/>
 <form action="marketsDelete" id="frm">
 <table border=1 width=600px>
-<tr><td>입점업체번호</td><td>업체아이디</td><td>업체이름</td><td>입점일</td><td>연락처</td>
+<tr><td>번호</td><td>입점업체번호</td><td>업체아이디</td><td>업체이름</td><td>입점일</td><td>연락처</td>
 	<td><input type="submit" value="삭제" />
 		<input type="checkbox" id="checkBoxs" />
 	</td>
 </tr>
 
-<tr th:each="MarketVO : ${list}">
+<tr th:each="MarketVO ,idx: ${list}">
+	<td>[[${idx.count}]]</td>
 	<td><a th:href="|marketDetail?marketNum=${MarketVO.marketNum}|">[[${MarketVO.marketNum}]]</a></td>
 	<td>[[${MarketVO.marketId}]]</td>
 	<td>[[${MarketVO.marketName}]]</td>
@@ -58,6 +76,20 @@ $(function(){
 </table>
 </form>
 
+<div id="chart" onclick="btn('1');" >
+1분기
+</div>
+<div id="chart" onclick="btn('2');" >
+2분기
+</div>
+<div id="chart" onclick="btn('3');" >
+3분기
+</div>
+<div id="chart" onclick="btn('4');" >
+4분기
+</div>
+<div id="notice">
+</div>
 
 <a href="/">메인으로가기</a>
 

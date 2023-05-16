@@ -25,5 +25,7 @@ public interface MarketMapper {
 	public MarketVO marketOneDetail(String marketNum);
 
 	public List<StatVO> statList(String userNum);
+
+	public List<StatVO> adminStat(String statQut);
 	
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawChart2);
+google.charts.setOnLoadCallback(drawChart3);
+function drawChart() {
+
+	var data = new google.visualization.DataTable();
+
+	data.addColumn('number', '마켓');
+	data.addColumn('number', '매출액');
+	data.addRows([[${sales}]]);
+
+	var options = {
+	  chart: {
+	  	title: '이번주 일별 방문자 현황',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+	
+	var chart = new google.visualization.ColumnChart(document.getElementById('linechart_material'));
+	chart.draw(data, options);
+}
+function drawChart2() {
+
+	var data = new google.visualization.DataTable();
+
+	data.addColumn('number', '마켓');
+	data.addColumn('number', '영업이익');
+	data.addRows([[${profit}]]);
+
+	var options = {
+	  chart: {
+	  	title: '이번주 일별 방문자 현황',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+	
+	var chart = new google.visualization.ColumnChart(document.getElementById('linechart_material2'));
+	chart.draw(data, options);
+}
+function drawChart3() {
+
+	var data = new google.visualization.DataTable();
+
+	data.addColumn('number', '마켓2');
+	data.addColumn('number', '매출 총 이익');
+	data.addRows([[${totProfit}]]);
+
+	var options = {
+	  chart: {
+	  	title: '이번주 일별 방문자 현황',
+	    subtitle: '1만원'
+	  },
+	  width: 900,
+	  height: 500
+	};
+	
+	var chart = new google.visualization.ColumnChart(document.getElementById('linechart_material3'));
+	chart.draw(data, options);
+}
+</script>
+</head>
+<body>
+<div id = "linechart_material" >
+
+</div>
+<div id = "linechart_material2" >
+
+</div>
+<div id = "linechart_material3" >
+
+</div>
+</body>
+</html>

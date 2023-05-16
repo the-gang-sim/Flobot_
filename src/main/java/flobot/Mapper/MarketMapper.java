@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import flobot.domain.MarketVO;
-import flobot.domain.MemberVO;
 import flobot.domain.StatVO;
 
 @Mapper

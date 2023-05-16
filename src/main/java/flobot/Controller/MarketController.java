@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import flobot.Command.LoginCommand;
 import flobot.Command.MarketCommand;
@@ -21,12 +22,10 @@ import flobot.Service.Market.MarketDetailService;
 import flobot.Service.Market.MarketInfoService;
 import flobot.Service.Market.MarketListService;
 import flobot.Service.Market.MarketRegiService;
+import flobot.Service.Market.MarketStatService;
 import flobot.Service.Market.MarketUpdateService;
 import flobot.Service.Market.MarketsDeleteService;
 import flobot.Service.Market.PwCheckService;
-import flobot.Service.Member.MemberDetailService;
-import flobot.Service.Member.MemberListService;
-import flobot.Service.Member.MembersDeleteService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -43,6 +42,8 @@ public class MarketController {
 	MarketDeleteService marketDeleteService;
 	@Autowired
 	PwCheckService pwCheckService;
+	@Autowired
+	MarketStatService marketStatService;
 	
 	@GetMapping("marketInsert")
 	public String marketAgree(@ModelAttribute(value="Agree")String Agree) {
@@ -158,5 +159,11 @@ public class MarketController {
 			Model model) {
 		marketDetailService.execute(marketNum, model);
 		return "thymeleaf/market/marketDetail";
+	}
+	
+	@RequestMapping("stat")
+	public String marketStat(Model model, HttpSession session) {
+		marketStatService.execute(model, session);
+		return "thymeleaf/market/marketStat";
 	}
 }

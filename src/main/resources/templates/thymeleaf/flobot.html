@@ -194,6 +194,8 @@ $(function(){
 			dataType : "html",
 			success : function(result){
 				$("#notice").html(result);
+				$("#notice2").css("backgroundColor", "black");
+				$("#table").css("backgroundColor", "red");
 			},
 			error : function(){
 				alert("상세 리뷰를 보고싶으면 로그인 하세요");

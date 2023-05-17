@@ -22,7 +22,10 @@ public class GoodsListService {
 			if(authInfo.getGrade().equals("mar")) {
 				List<GoodsVO> list = goodsMapper.goodsList(authInfo.getUserNum());
 				model.addAttribute("list", list);
-			}else {
+			}else if(authInfo.getGrade().equals("mem")){
+				List<GoodsVO> list = goodsMapper.goodsPrpList(authInfo.getUserNum());
+				model.addAttribute("list", list);
+			}else{
 				List<GoodsVO> list = goodsMapper.goodsList(null);
 				model.addAttribute("list", list);
 			}

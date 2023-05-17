@@ -29,4 +29,6 @@ public interface GoodsMapper {
 	public List<GoodsVO> goodsWishListselect(WishVO vo);
 
 	public void visitAdd(String goodsNum);
+
+	public List<GoodsVO> goodsPrpList(String userNum);
 }

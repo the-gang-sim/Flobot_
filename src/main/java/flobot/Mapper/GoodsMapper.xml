@@ -17,6 +17,56 @@
 		</if>
 		order by g.goods_num desc
 	</select>
+	<select id ="goodsPrpList" parameterType="string" resultType="goodsVO">
+	select g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain
+		, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
+		, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
+        , g.TOTAL_IPGO_QTY totalQty, g.goods_price goodsPrice
+	from ( select g.GOODS_NUM , GOODS_NAME , GOODS_CONTENT , GOODS_MAIN 
+                    , DELIVERY_COST , MANUFACTURER 
+                    , VISIT_COUNT , MARKET_NUM , GOODS_KIND 
+                    , i.TOTAL_IPGO_QTY , i.goods_price 
+           from goods g left outer join(SELECT GOODS_NUM, SUM(IPGO_QTY) AS TOTAL_IPGO_QTY, MAX(GOODS_PRICE) AS GOODS_PRICE 
+	                                    FROM GOODS_IPGO 
+	                                    GROUP BY GOODS_NUM) i
+	    on g.goods_num = i.goods_num) g join prp p 
+	on g.goods_num = p.goods_num
+	order by ((abs((select brilliance
+            from prp p join member m
+            on m.member_num = p.member_num
+            where m.member_num = #{userNum})-p.brilliance)*0.4)+(abs((select deli_charge
+            from prp p join member m
+            on m.member_num = p.member_num
+            where m.member_num = #{userNum})-p.deli_charge)*3)+(abs((select root_yn 
+            from prp p join member m
+            on m.member_num = p.member_num
+            where m.member_num = #{userNum})-p.root_yn )*3)+(select count(*) as cnt
+            from goods g join purchase_list l
+            on g.goods_num = l.goods_num join (select * from purchase where member_num = #{userNum}) p
+            on l.purchase_num = p.purchase_num
+            where goods_kind='flower'
+            group by goods_kind)*p.flower+NVL((select count(*) as cnt
+            from goods g join purchase_list l
+            on g.goods_num = l.goods_num join (select * from purchase where member_num = #{userNum}) p
+            on l.purchase_num = p.purchase_num
+            where goods_kind='fleshy'
+            group by goods_kind),0)*p.fleshy+NVL((select count(*) as cnt
+            from goods g join purchase_list l
+            on g.goods_num = l.goods_num join (select * from purchase where member_num = #{userNum}) p
+            on l.purchase_num = p.purchase_num
+            where goods_kind='tree'
+            group by goods_kind),0)*p.tree+NVL((select count(*) as cnt
+            from goods g join purchase_list l
+            on g.goods_num = l.goods_num join (select * from purchase where member_num = #{userNum}) p
+            on l.purchase_num = p.purchase_num
+            where goods_kind='herb'
+            group by goods_kind),0)*p.herb+NVL((select count(*) as cnt
+            from goods g join purchase_list l
+            on g.goods_num = l.goods_num join (select * from purchase where member_num = #{userNum}) p
+            on l.purchase_num = p.purchase_num
+            where goods_kind='seed'
+            group by goods_kind),0)*p.seed) desc
+	</select>
 	<insert id="goodsRegi" parameterType="goodsVO">
 		insert into goods(GOODS_NUM, GOODS_NAME, GOODS_CONTENT, GOODS_MAIN, GOODS_MAIN_ORG, GOODS_IMAGE, GOODS_IMAGE_ORG
 							, DELIVERY_COST, MANUFACTURER, VISIT_COUNT, MARKET_NUM, GOODS_KIND)

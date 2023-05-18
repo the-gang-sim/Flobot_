@@ -73,6 +73,10 @@
 		values(#{goodsNum}, #{goodsName}, #{goodsContent}, #{goodsMain}, #{goodsMainOrg}, #{goodsImage}, #{goodsImageOrg}
 				, #{deliveryCost}, #{manufacturer}, 0, #{marketNum}, #{goodsKind})
 	</insert>
+	<insert id="goodsPrpRegi" parameterType="prpVO">
+		insert into prp(prp_num ,goods_Num, brilliance, deli_charge, root_yn,flower,seed,herb,tree,fleshy)
+		values((select concat('prp00',nvl(max(substr(prp_num,7)),0)+ 1) from prp), #{goodsNum},#{brilliance} ,#{deliCharge},#{rootYn},#{flower},#{seed},#{herb},#{tree},#{fleshy})
+	</insert>
 	<select id="goodsCreateNum" resultType="string">
 		select concat('goods',nvl(max(substr(goods_Num,6)),100000) + 1)
 		from goods

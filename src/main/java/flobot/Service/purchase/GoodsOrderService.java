@@ -39,6 +39,8 @@ public class GoodsOrderService {
 				cartVO.setMemberNum(authInfo.getUserNum());
 				cartVO.setGoodsNums(goodsNums);
 				purchaseMapper.cartItemDelete(cartVO);
+				int z = purchaseMapper.addPrp(vo);
+				System.out.println(z);
 			}
 		}
 		return purchaseNum;

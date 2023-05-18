@@ -42,6 +42,8 @@ public interface PurchaseMapper {
 	public void temp(String purchaseNum);
 
 	public void purchaseOk(String purchaseNum);
+
+	public int addPrp(PurchaseVO vo);
 	
 	
 

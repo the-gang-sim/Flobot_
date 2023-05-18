@@ -121,4 +121,33 @@
 		update purchase_list set purchase_status='구매완료'
 		where purchase_num = #{purchaseNum}
 	</update>
+	
+	<update id="addPrp" parameterType="purVO" >
+		merge into prp
+			using dual
+			on (member_num = #{memberNum})
+		when matched then
+			update set brilliance = (select avg(brilliance) from(select brilliance from prp
+			where member_num =#{memberNum} or goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>)), deli_charge = (select avg(deli_charge) from(select deli_charge from prp
+			where member_num =#{memberNum} or goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>)), root_yn = (select avg(root_yn) from(select root_yn from prp
+			where member_num =#{memberNum} or goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>))
+		when not matched then
+			insert (prp_num, member_num, brilliance, deli_charge, root_yn)
+			values((select concat('prp00',nvl(max(substr(prp_num,7)),0)+ 1) from prp), #{memberNum}, (select avg(brilliance) from(select brilliance from prp
+			where goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>)), (select avg(deli_charge) from(select deli_charge from prp
+			where goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>)),(select avg(root_yn) from(select root_yn from prp
+			where goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
+								#{goodsNum}
+			                    </foreach>)))
+	</update>
 </mapper> 

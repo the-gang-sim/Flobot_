@@ -14,6 +14,7 @@ import flobot.Command.GoodsCommand;
 import flobot.Mapper.GoodsMapper;
 import flobot.domain.AuthInfoVO;
 import flobot.domain.GoodsVO;
+import flobot.domain.PrpVO;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -76,6 +77,23 @@ public class GoodsRegiService {
 			
 		}
 		goodsMapper.goodsRegi(vo);
+		PrpVO prp = new PrpVO();
+		prp.setGoodsNum(goodsNum);
+		prp.setBrilliance(Math.round(Math.random()*10));
+		prp.setDeliCharge(Math.round(Math.random()));
+		prp.setRootYn(Math.round(Math.random()));
+		if(goodsCommand.getGoodsKind().equals("flower")) {
+			prp.setFlower(1);
+		}else if(goodsCommand.getGoodsKind().equals("seed")) {
+			prp.setSeed(1);
+		}else if(goodsCommand.getGoodsKind().equals("herb")) {
+			prp.setHerb(1);
+		}else if(goodsCommand.getGoodsKind().equals("tree")) {
+			prp.setTree(1);
+		}else {
+			prp.setFleshy(1);
+		}
+		goodsMapper.goodsPrpRegi(prp);
 		model.addAttribute("goodsCommand",vo);
 	}
 

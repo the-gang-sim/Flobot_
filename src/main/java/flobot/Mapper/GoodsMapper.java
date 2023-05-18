@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import flobot.domain.GoodsVO;
+import flobot.domain.PrpVO;
 import flobot.domain.WishVO;
 
 @Mapper
@@ -31,4 +32,6 @@ public interface GoodsMapper {
 	public void visitAdd(String goodsNum);
 
 	public List<GoodsVO> goodsPrpList(String userNum);
+
+	public void goodsPrpRegi(PrpVO prp);
 }

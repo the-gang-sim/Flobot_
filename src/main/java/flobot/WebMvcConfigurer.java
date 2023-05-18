@@ -12,8 +12,8 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor)
-			.addPathPatterns("/member/*","/market/*","/admin/*","/goodsIpgo/*","/register/*")
-			.excludePathPatterns("/login/*","/search/*","/purchase/*","/inquire/*","/goods/*","/review/*","/corner/*");
+			.addPathPatterns("/member/*","/market/*","/admin/*","/goodsIpgo/*")
+			.excludePathPatterns("/login/*","/search/*","/purchase/*","/inquire/*","/goods/*","/review/*","/corner/*","/register/*");
 	}
 	
 	

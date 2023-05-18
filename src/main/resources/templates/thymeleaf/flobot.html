@@ -21,7 +21,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     margin-right: 0px;
 }
 body{
-
     font-family: 'Noto Sans KR', sans-serif;
     font-size:15px;
     background-color: #f5f6f7;
@@ -29,7 +28,6 @@ body{
     color : #222;
     margin: 0;
 }
-
 .login_id input {
 	width: 100%;
 	height: 50px;
@@ -39,7 +37,6 @@ body{
 	border: 1px solid lightgray;
 	outline: none;
 }
-
 .submit input {
 	border-radius: 10px;
 	background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
@@ -48,11 +45,9 @@ body{
 	font-size: 1.2em;
 	letter-spacing: 2px;
 }
-
 /* div#notice2{ */
 /*     background-color: red; */
 /* } */
-
 button#noticebutton {
 	background-color: tomato;
 	border-radius: 10px;
@@ -60,21 +55,15 @@ button#noticebutton {
 	width: 70px;
 	height: 40px;
 }
-
 button#noticebutton2 {
 	background-color: bisque;
 	border-radius: 10px;
 	width: 70px;
 	height: 40px;
-	
 }
-
-
 </style>
-
-
- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -86,36 +75,24 @@ google.charts.setOnLoadCallback(drawChart2);
 google.charts.setOnLoadCallback(drawChart3);
 
 function drawChart1() {
-
 	var data = new google.visualization.DataTable();
 	data.addColumn('number', '분기');
 	data.addColumn('number', '매출액');
-	
-	
 	data.addRows([[${statSales}]]);
-	
 	var options = {
 	  chart: {
 	    title: '매출액',
 	    subtitle: '1만원'
-	  },
-	  width: 900,
-	  height: 500
+	  }
 	};
-	
 	var chart = new google.charts.Line(document.getElementById('linechart_material'));
-	
 	chart.draw(data, google.charts.Line.convertOptions(options));
 }
 function drawChart2() {
-
 	var data = new google.visualization.DataTable();
 	data.addColumn('number', '분기');
 	data.addColumn('number', '영업이익');
-
-
 	data.addRows([[${statProfit}]]);
-
 	var options = {
 		series: {
 			0: { color: '#FE9A2E' }
@@ -123,24 +100,16 @@ function drawChart2() {
 	  chart: {
 	    title: '영업이익',
 	    subtitle: '1만원'
-	  },
-	  width: 900,
-	  height: 500
+	  }
 	};
-
 	var chart2 = new google.charts.Line(document.getElementById('linechart_material2'));
-
 	chart2.draw(data, google.charts.Line.convertOptions(options));
 }
 function drawChart3() {
-
 	var data = new google.visualization.DataTable();
 	data.addColumn('number', '분기');
 	data.addColumn('number', '매출 총 이익');
-
-
 	data.addRows([[${statTotPorfit}]]);
-
 	var options = {
 		series: {
 			0: { color: '#a561bd' }
@@ -148,19 +117,12 @@ function drawChart3() {
 	  chart: {
 	    title: '매출 총 이익',
 	    subtitle: '1만원'
-	  },
-	  width: 900,
-	  height: 500
+	  }
 	};
-
 	var chart3 = new google.charts.Line(document.getElementById('linechart_material3'));
 
 	chart3.draw(data, google.charts.Line.convertOptions(options));
 }
-
-
-
-
 // Accordion 
 function myAccFunc(kind) {
   var x = document.getElementById(kind);
@@ -171,21 +133,15 @@ function myAccFunc(kind) {
   }
 }
 
-
-
-
-
 // Open and close sidebar
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
   document.getElementById("myOverlay").style.display = "block";
 }
- 
 function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
 }
-
 $(function(){
 	$("#loginBtn").click(function(){
 		if([[${session.authInfo == null}]]){
@@ -196,7 +152,6 @@ $(function(){
 		}
 	});
 });
-
 $(function(){
 	$("#cart").click(function(){
 		if([[${session.authInfo == null}]]){
@@ -209,8 +164,6 @@ $(function(){
 		}
 	});
 });
-
-
 $(function(){
 	$("#table").click(function(){
 		$.ajax({
@@ -234,291 +187,166 @@ $(function(){
 		location.reload();
 	});
 });
-
-
-
 </script>
-
 </head>
 <body class="w3-content" style="max-width:1920px">
+ 	<!-- Top menu on small screens --> 
+<!-- <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge"> -->
+<!--   <div class="w3-bar-item w3-padding-24 w3-wide"><a href = "/" style = "color:white">Flobot</a></div> -->
+<!--   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a> -->
+<!-- </header> -->
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:20%;display:block" id="mySidebar"  > 
-  <div class="w3-container w3-display-container w3-padding-16">
-    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-    <h3 class="w3-wide"><a href = "/" style = "color: black"><b>Flobot</b></a></h3> 
-  </div>
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-  <a onclick="myAccFunc('flower')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-    꽃 <i class="fa fa-caret-down"></i> 
-    </a>
-    <div id="flower" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-    	<a href="/search/goodsSearch?keyword=flower"><input type="button" value="꽃1" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=장미"><input type="button" value="꽃2" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=튤립"><input type="button" value="꽃3" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=하얀"><input type="button" value="꽃4" class="w3-bar-item w3-button"></a>
-    </div>
-    <a onclick="myAccFunc('hub')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-    허브 <i class="fa fa-caret-down"></i> 
-    </a>
-    <div id="hub" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-    	<a href="/search/goodsSearch?keyword=herb"><input type="button" value="허브1" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=민트"><input type="button" value="허브2" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=로즈"><input type="button" value="허브3" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=허브"><input type="button" value="허브4" class="w3-bar-item w3-button"></a>
-    </div>
-    <a onclick="myAccFunc('da62')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      다육이 <i class="fa fa-caret-down"></i> 
-    </a>
-    <div id="da62" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-   		<a href="/search/goodsSearch?keyword=fleshy"><input type="button" value="다육이1" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=다육"><input type="button" value="다육이2" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=이상"><input type="button" value="다육이3" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=세트"><input type="button" value="다육이4" class="w3-bar-item w3-button"></a>
-    </div>
-    <a onclick="myAccFunc('tree')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      나무 <i class="fa fa-caret-down"></i> 
-    </a>
-    <div id="tree" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-    	<a href="/search/goodsSearch?keyword=tree"><input type="button" value="나무1" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=나무"><input type="button" value="나무2" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=소"><input type="button" value="나무3" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=은행"><input type="button" value="나무4" class="w3-bar-item w3-button"></a>
-    </div>
-    <a onclick="myAccFunc('seed')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      씨앗 <i class="fa fa-caret-down"></i> 
-    </a>
-    <div id="seed" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-    	<a href="/search/goodsSearch?keyword=seed"><input type="button" value="씨앗1" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=씨"><input type="button" value="씨앗2" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=해바"><input type="button" value="씨앗3" class="w3-bar-item w3-button"></a>
-    	<a href="/search/goodsSearch?keyword=배추"><input type="button" value="씨앗4" class="w3-bar-item w3-button"></a>
-    </div>
-  </div>
-</nav>
-	<form action="/search/goodsSearch">
-		<div class="container">
-			<br />
-			<ul class="nav justify-content-end">
-				<div class="login_id">
-					<input type="text" name="keyword" th:value="${keyword}" id="search"
-						style="width: 300px; height: 35px" />
-				</div>
-				<div class="submit">
-					<input type="submit" value="검색" style="height: 35px" />
-				</div>
-				<a href="/search/image"><img src="/static/image/smartphone.png"
-					width="35"></a>
-				<li class="nav-item"><span th:if="${session.authInfo == null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그인</p>
-									</span> <span th:if="${session.authInfo != null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그아웃</p> </span></li>
-				<th:block th:if="${session.authInfo == null}">
-					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="#" id="cart">장바구니</a></li>
-					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/register/agree">회원가입</a></li>
-					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/market/marketInsert">입점신청</a></li>
-				</th:block>
-				<th:block th:if="${session.authInfo != null}">
-					<th:block
-						th:if="${session.authInfo.grade == 'mem' or session.authInfo.grade == 'a'}">
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="#" id="cart">장바구니</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/register/memberDetail">내 정보보기</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/purchase/orderList">주문내역</a></li>
-					</th:block>
-				</th:block>
-			</ul>
-		</div>
-	</form>
-	<hr>
-	<div class="container" align="center">
-		<th:block th:if="${session.authInfo != null}">
-			<th:block th:if="${session.authInfo.grade == 'mem' or session.authInfo.grade == 'a'}">
-			
-			
-			</th:block>
-			<th:block th:if="${session.authInfo.grade == 'mar'}">
-				<div class="container">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/market/marketInfo">내 마켓보기</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="goods/goodsList">내 상품목록</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="goods/goodsRegi">상품등록</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/purchase/marketPurchaseList">주문목록</a></li>
-						<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/inquire/MarketInquireList">문의목록</a></li>
-					</ul>
-				</div>
-			</th:block>
-			<th:block th:if="${session.authInfo.grade == 'a'}">
-				<a href="admin/adminPage">관리자 전용 페이지</a>
-			</th:block>
-		</th:block>
-	</div>
-	<hr>
+ <!-- Overlay effect when opening sidebar on small screens -->
+<!-- <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div> -->
 
-
-
-	<!-- Top menu on small screens -->
-<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-  <div class="w3-bar-item w3-padding-24 w3-wide"><a href = "/" style = "color:white">Flobot</a></div>
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-</header>
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:30%">
+ <!-- !PAGE CONTENT! -->
+<!-- <div class="w3-main" style="margin-left:30%"> -->
 
   <!-- Push down content on small screens -->
-  <div class="w3-hide-large" style="margin-top:83px"></div>
+<!-- <div class="w3-hide-large" style="margin-top:83px"></div> -->
   
-  
+<th:block th:if="${session.authInfo == null or session.authInfo.grade != 'mar'}" >
+<!-- Sidebar/menu -->
+	<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:20%;display:block;text-align: center;" id="mySidebar"  > 
+		<div class="w3-container w3-display-container w3-padding-16">
+			<i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+			<h3 class="w3-wide"><a href = "/" style = "color: black"><b>Flobot</b></a></h3> 
+		</div>
+		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+			<a onclick="myAccFunc('flower')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+			꽃 <i class="fa fa-caret-down"></i></a>
+			<div id="flower" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="/search/goodsSearch?keyword=flower"><input type="button" value="꽃1" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=장미"><input type="button" value="꽃2" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=튤립"><input type="button" value="꽃3" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=하얀"><input type="button" value="꽃4" class="w3-bar-item w3-button"></a>
+			</div>
+			<a onclick="myAccFunc('hub')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+			허브 <i class="fa fa-caret-down"></i></a>
+			<div id="hub" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="/search/goodsSearch?keyword=herb"><input type="button" value="허브1" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=민트"><input type="button" value="허브2" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=로즈"><input type="button" value="허브3" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=허브"><input type="button" value="허브4" class="w3-bar-item w3-button"></a>
+			</div>
+			<a onclick="myAccFunc('da62')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+			다육이 <i class="fa fa-caret-down"></i></a>
+			<div id="da62" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="/search/goodsSearch?keyword=fleshy"><input type="button" value="다육이1" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=다육"><input type="button" value="다육이2" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=이상"><input type="button" value="다육이3" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=세트"><input type="button" value="다육이4" class="w3-bar-item w3-button"></a>
+			</div>
+			<a onclick="myAccFunc('tree')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+			나무 <i class="fa fa-caret-down"></i></a>
+			<div id="tree" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="/search/goodsSearch?keyword=tree"><input type="button" value="나무1" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=나무"><input type="button" value="나무2" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=소"><input type="button" value="나무3" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=은행"><input type="button" value="나무4" class="w3-bar-item w3-button"></a>
+			</div>
+			<a onclick="myAccFunc('seed')" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+			씨앗 <i class="fa fa-caret-down"></i></a>
+			<div id="seed" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="/search/goodsSearch?keyword=seed"><input type="button" value="씨앗1" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=씨"><input type="button" value="씨앗2" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=해바"><input type="button" value="씨앗3" class="w3-bar-item w3-button"></a>
+				<a href="/search/goodsSearch?keyword=배추"><input type="button" value="씨앗4" class="w3-bar-item w3-button"></a>
+			</div>
+		</div>
+	</nav>
 
-<th:block th:if="${session.authInfo== null}">
-			
-<div id="notice" align="center">
-    <div class="w3-col l3 s6" >
-      <div class="w3-container">
-      
-      <table>
-      <th:block th:each="vo,idx : ${list}">
+	<div class="container" >
+		<form action="/search/goodsSearch">
+		<br />
+		<ul class="nav justify-content-end">
+			<div class="login_id">
+				<input type="text" name="keyword" th:value="${keyword}" id="search"
+					style="width: 300px; height: 35px" />
+			</div>
+			<div class="submit">
+				<input type="submit" value="검색" style="height: 35px" />
+			</div>
+			<a href="/search/image"><img src="/static/image/smartphone.png"
+				width="35"></a>
+			<li class="nav-item"><span th:if="${session.authInfo == null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그인</p>
+								</span> <span th:if="${session.authInfo != null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그아웃</p> </span></li>
+			<th:block th:if="${session.authInfo == null}">
+				<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="#" id="cart">장바구니</a></li>
+				<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/register/agree">회원가입</a></li>
+				<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/market/marketInsert">입점신청</a></li>
+			</th:block>
+			<th:block th:if="${session.authInfo != null}">
+					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="#" id="cart">장바구니</a></li>
+					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/register/memberDetail">내 정보보기</a></li>
+					<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/purchase/orderList">주문내역</a></li>
+			</th:block>
+		</ul>
+	</form>
+	</div>
+
+	<div class="container" align="center">
+	
+		<th:block th:if="${session.authInfo != null and session.authInfo.grade == 'a'}">
+			<hr />
+			<a href="admin/adminPage">관리자 전용 페이지</a>
+		</th:block>
+	
+		<table>
+			<hr />
+			<th:block th:each="vo,idx : ${list}">
 			<th:block th:if="${idx.count < 7}">
-			<td>  <div class="w3-display-container">
-				<a th:href="|/corner/prodInfo/${vo.goodsNum}|"><img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="200"/>
-				<span th:if="${vo.totalQty<10 && vo.totalQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
-				<div class="w3-display-middle">
-				<span th:if="${vo.totalQty == null}" class="w3-button w3-black">상품준비중</span></div></div>
-				
-				
-					상품명:[[${vo.goodsName}]]<br/>
-					가격:<span th:if="${vo.goodsPrice == null}">상품준비중</span><span th:if="${vo.goodsPrice!=null}">[[${vo.goodsPrice}]]</span>	<br/>
-					재고:<span th:if="${vo.totalQty == null}">상품준비중</span><span th:if="${vo.totalQty<10 && vo.totalQty>0}">[[${vo.totalQty}]]</span><span th:if="${vo.totalQty>10}">[[${vo.totalQty}]]</span><br/>
-					배송비:[[${vo.deliveryCost}]]
-				</a>
-			</td>
+				<td>  
+					<div class="w3-display-container">
+						<a th:href="|/corner/prodInfo/${vo.goodsNum}|"><img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="200"/>
+						<span th:if="${vo.totalQty<10 && vo.totalQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
+						<div class="w3-display-middle">
+							<span th:if="${vo.totalQty == null}" class="w3-button w3-black">상품준비중</span>
+						</div>
+					</div>
+						상품명:[[${vo.goodsName}]]<br/>
+						가격:<span th:if="${vo.goodsPrice == null}">상품준비중</span><span th:if="${vo.goodsPrice!=null}">[[${vo.goodsPrice}]]</span>	<br/>
+						재고:<span th:if="${vo.totalQty == null}">상품준비중</span><span th:if="${vo.totalQty<10 && vo.totalQty>0}">[[${vo.totalQty}]]</span><span th:if="${vo.totalQty>10}">[[${vo.totalQty}]]</span><br/>
+						배송비:[[${vo.deliveryCost}]]
+				</td>
 			<th:block th:if="${idx.count % 3 == 0}" th:utext="'</tr><tr>'"/>
 			</th:block>
 			</th:block>
-      </table>
-      </div>
-
-        
-        
-      
-      </div>
-</div>
+		</table>
+	</div>
 
 </th:block>
-
-
-<th:block th:if="${session.authInfo != null}">
-			<th:block th:if="${session.authInfo.grade == 'mem' or session.authInfo.grade == 'a'}">
-			
-			
-
-<div id="notice">
-    <div class="w3-col l3 s6">
-      <div class="w3-container">
-      
-      <table>
-      <th:block th:each="vo,idx : ${list}">
-			<th:block th:if="${idx.count < 7}">
-			<td>  <div class="w3-display-container">
-				<a th:href="|/corner/prodInfo/${vo.goodsNum}|"><img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="200"/>
-				<span th:if="${vo.totalQty<10 && vo.totalQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
-				<div class="w3-display-middle">
-				<span th:if="${vo.totalQty == null}" class="w3-button w3-black">상품준비중</span></div></div>
-				
-				
-					상품명:[[${vo.goodsName}]]<br/>
-					가격:<span th:if="${vo.goodsPrice == null}">상품준비중</span><span th:if="${vo.goodsPrice!=null}">[[${vo.goodsPrice}]]</span>	<br/>
-					재고:<span th:if="${vo.totalQty == null}">상품준비중</span><span th:if="${vo.totalQty<10 && vo.totalQty>0}">[[${vo.totalQty}]]</span><span th:if="${vo.totalQty>10}">[[${vo.totalQty}]]</span><br/>
-					배송비:[[${vo.deliveryCost}]]
-				</a>
-			</td>
-			<th:block th:if="${idx.count % 3 == 0}" th:utext="'</tr><tr>'"/>
-			</th:block>
-			</th:block>
-      </table>
-      </div>
-
-        
-        
-      
-      </div>
-</div>
-
+<th:block th:if="${session.authInfo != null and session.authInfo.grade == 'mar'}">
+	<div class="container">
+		<ul class="nav justify-content-end">
+			<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/market/marketInfo">내 마켓보기</a></li>
+			<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="goods/goodsList">내 상품목록</a></li>
+			<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="goods/goodsRegi">상품등록</a></li>
+			<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/purchase/marketPurchaseList">주문목록</a></li>
+			<li class="nav-item"><a class="w3-bar-item w3-button" style="color: black" href="/inquire/MarketInquireList">문의목록</a></li>
+			<li class="nav-item"><span th:if="${session.authInfo != null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그아웃</p> </span></li>
+		</ul>
+	</div>
+	<hr />
+	<div align = "center">
+		<div id = "table" style = "display:inline" align = "center">
+		<button type="button" id = "noticebutton2">표</button>
+	</div>
+		<div id = "notice2" style = "display:inline" align = "center">
+		<button type="button" id = "noticebutton">그래프</button>
+		</div>
+	</div>
+	<div align="center" id="notice">
+		<br/>
+		<h1>차트</h1>
+		<br/>
+		<div id = "linechart_material" style="width:30%;height:300px;display: inline-block">
+		</div>
+		<div id = "linechart_material2" style="width:30%;height:300px;display: inline-block">
+		</div>
+		<div id = "linechart_material3" style="width:30%;height:300px;display: inline-block">
+		</div>
+	</div>
 </th:block>
-
-<th:block th:if="${session.authInfo.grade == 'mar'}">
-
-<div align = "center">
-<div id = "table" style = "display:inline" align = "center">
-<button type="button" id = "noticebutton2">표</button>
-</div>
-
-<div id = "notice2" style = "display:inline" align = "center">
-<button type="button" id = "noticebutton">그래프</button>
-
-</div>
-</div>
-
-
-
-<div align="center" id="notice">
-<br/>
-차트 <br/>
-
-[[${stat}]]
-<br/><br/>
-
-<div id = "year">
-</div>
-
-<div id = "linechart_material" >
-
-</div>
-<div id = "linechart_material2" >
-
-</div>
-<div id = "linechart_material3" >
-
-</div>
-
-</div>
-
-
-</th:block>
-
-
-
-
-
-
-
-
-</th:block>
-
-
-
-
-			
-			
-			  
-
-  
-
-
-
-
-
-
-
-
- 
-
- 
-
-
-
-
-
 </body>
 </html>

@@ -90,7 +90,7 @@ function prodChk(){
 		if(chk[i].checked == true){
 			cnt++;
 			totalPrice += 
-				Number($(".cartPrice:eq("+i+")").text().replace("₩","").replace(",",""))*Number($(".qty:eq("+i+")").text().replace(",",""));
+				(Number($(".cartPrice:eq("+i+")").text().replace("₩","").replace(",",""))*Number($(".qty:eq("+i+")").text().replace(",",""))+Number($(".deli:eq("+i+")").text().replace("₩","").replace(",","")));
 			
 		}
 	}
@@ -271,7 +271,7 @@ function w3_open() {
 				<span class="qty" th:id="${vo.goodsNum}">[[${vo.qty}]]</span>
 			    <a th:href="|javascript:goodsCartAdd('${vo.goodsNum}')|" >[ + ]</a></td>
 			<td><span class="cartPrice" th:id="${'price'+vo.goodsNum}"><img src="/static/image/cost.jpg" width="15" /> [[${vo.goodsPrice}]] ₩</td>
-			<td><img src="/static/image/deli.png" width="15" /> [[${vo.deliveryCost}]] ₩</td>
+			<td><img src="/static/image/deli.png" width="15" /><span class="deli" th:id="${vo.deliveryCost}"> [[${vo.deliveryCost}]] ₩</span></td>
 		</tr>
 		<tr><td colspan="5" align="right">총 구매비용 : <span id="tot"></span></td><td><input type="submit" value="구매하기" /></td></tr>
 	</table>

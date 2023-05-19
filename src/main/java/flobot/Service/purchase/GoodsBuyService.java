@@ -28,7 +28,7 @@ public class GoodsBuyService {
 		Integer tot = 0;
 		String goodsNums = "";
 		for(CartVO vo1 : list) {
-			tot = vo1.getDeliveryCost() + (vo1.getQty() * vo1.getGoodsPrice());
+			tot += vo1.getDeliveryCost() + (vo1.getQty() * vo1.getGoodsPrice());
 			goodsNums += vo1.getGoodsNum() + "-";
 		}
 		MemberVO mem =memberMapper.memberOneSelect(authInfo.getUserNum());

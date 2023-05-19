@@ -184,7 +184,7 @@ function w3_open() {
 		<td>[[${idx.count}]]</td>
 		<td width="200"><img th:src="|/goods/image/${vo.goodsMain}|" alt="메인이미지" width="200" height="150"/></td>
 		<td><a th:href="|/corner/prodInfo/${vo.goodsNum}|">[[${vo.goodsName}]]</a></td>
-		<td>가격은 없음!!</td>
+		<td>[[${vo.goodsPrice}]]</td>
 		<td><a th:href="|/corner/cartAdd3?goodsNum=${vo.goodsNum}|"><input type="button" onclick="cartAdd();" value="장바구니" /></a></td>
 	</tr>
 </table>

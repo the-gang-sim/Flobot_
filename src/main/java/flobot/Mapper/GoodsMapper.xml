@@ -121,7 +121,7 @@
 	</select>
 	
 	<select id = "goodsWishListselect" resultType = "goodsVO" parameterType="wishVO">
-	select DISTINCT g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
+	select DISTINCt g.GOODS_NUM goodsNum, GOODS_NAME goodsName, GOODS_CONTENT goodsContent, GOODS_MAIN goodsMain, GOODS_MAIN_ORG goodsMainOrg
 					, GOODS_IMAGE goodsImage, GOODS_IMAGE_ORG goodsImageOrg, DELIVERY_COST deliveryCost, MANUFACTURER manufacturer
 					, VISIT_COUNT visitCount, MARKET_NUM marketNum, GOODS_KIND goodsKind
 					, w.MEMBER_NUM memberNum 

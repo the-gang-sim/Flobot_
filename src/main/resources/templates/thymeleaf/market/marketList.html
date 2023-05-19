@@ -3,6 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+/* body { */
+/*   padding:1.5em; */
+/*   background: #f5f5f5 */
+/* } */
+
+table {
+  border: 1px #a39485 solid;
+  font-size: .9em;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+}
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: 	#B8860B;
+  /*background: #73685d;*/
+}
+  
+ td, th {
+  padding: 1em .5em;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+a {
+  color: #73685d;
+}
+  
+ @media all and (max-width: 768px) {
+    
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  
+  table {
+    position: relative; 
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+  
+  thead {
+    float: center;
+    white-space: nowrap;
+  }
+  
+  tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  th {
+    border-bottom: 1px solid #a39485;
+  }
+  
+  td {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  
+  }
+ button#noticebutton {
+	background-color: #B8860B;	
+	border-radius: 10px;
+	color: white;
+	width: 70px;
+	height: 40px;
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -56,15 +141,15 @@ function btn(qut){
 		    <input type="submit" value="검색" />
 </form>
 <br/>
-<form action="marketsDelete" id="frm">
-<table border=1 width=600px>
-<tr><td>번호</td><td>입점업체번호</td><td>업체아이디</td><td>업체이름</td><td>입점일</td><td>연락처</td>
-	<td><input type="submit" value="삭제" />
-		<input type="checkbox" id="checkBoxs" />
+<form action="marketsDelete" id="frm" >
+<table  >
+<tr align = "center"><thead><th>번호</th><th>입점업체번호</th><th>업체아이디</th><th>업체이름</th><th>입점일</th><th>연락처</th>
+	<td><input type="checkbox" id="checkBoxs" /><input type="submit" value="삭제" />
+		
 	</td>
-</tr>
+</tr> </thead>
 
-<tr th:each="MarketVO ,idx: ${list}">
+<tr th:each="MarketVO ,idx: ${list}" align = "center">
 	<td>[[${idx.count}]]</td>
 	<td><a th:href="|marketDetail?marketNum=${MarketVO.marketNum}|">[[${MarketVO.marketNum}]]</a></td>
 	<td>[[${MarketVO.marketId}]]</td>
@@ -75,22 +160,23 @@ function btn(qut){
 </tr>
 </table>
 </form>
-
-<div id="chart" onclick="btn('1');" >
-1분기
+<br />
+<div align = "center">
+	<div id="chart" onclick="btn('1');"style="display: inline-block">
+		<button type="button" id = "noticebutton">1분기</button>
+	</div>
+	<div id="chart" onclick="btn('2');" style="display: inline-block">
+		<button type="button" id = "noticebutton">2분기</button>
+	</div>
+	<div id="chart" onclick="btn('3');" style="display: inline-block">
+		<button type="button" id = "noticebutton">3분기</button>
+	</div>
+	<div id="chart" onclick="btn('4');" style="display: inline-block">
+		<button type="button" id = "noticebutton">4분기</button>
+	</div>
+	<div id="notice">
+	</div>
 </div>
-<div id="chart" onclick="btn('2');" >
-2분기
-</div>
-<div id="chart" onclick="btn('3');" >
-3분기
-</div>
-<div id="chart" onclick="btn('4');" >
-4분기
-</div>
-<div id="notice">
-</div>
-
 <a href="/">메인으로가기</a>
 
 </body>

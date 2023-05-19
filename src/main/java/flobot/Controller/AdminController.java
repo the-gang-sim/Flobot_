@@ -44,6 +44,7 @@ public class AdminController {
 		model.addAttribute("sales", i);
 		model.addAttribute("profit", j);
 		model.addAttribute("totProfit", k);
+		model.addAttribute("list",list);
 		return "thymeleaf/admin/chart";
 	}
 

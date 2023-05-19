@@ -176,10 +176,6 @@ $(function(){
 				$("#noticebutton").css("color", "black");
 				$("#noticebutton2").css("backgroundColor", "tomato");
 				$("#noticebutton2").css("color", "white");
-			},
-			error : function(){
-				alert("상세 리뷰를 보고싶으면 로그인 하세요");
-				return false;
 			}
 		});
 	});
@@ -329,11 +325,11 @@ $(function(){
 	</div>
 	<hr />
 	<div align = "center">
-		<div id = "table" style = "display:inline" align = "center">
-		<button type="button" id = "noticebutton2">표</button>
-	</div>
 		<div id = "notice2" style = "display:inline" align = "center">
 		<button type="button" id = "noticebutton">그래프</button>
+		</div>
+		<div id = "table" style = "display:inline" align = "center">
+		<button type="button" id = "noticebutton2">표</button>
 		</div>
 	</div>
 	<div align="center" id="notice">

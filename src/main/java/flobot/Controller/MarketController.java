@@ -163,6 +163,14 @@ public class MarketController {
 	@RequestMapping("stat")
 	public String marketStat(Model model, HttpSession session) {
 		marketStatService.execute(model, session);
+//		PRP 테이블 추가(상품추천가중치)
+//		  - 상품번호, 회원번호, 화려함, 무배여부, 뿌리여부
+//
+//		화려함 선호도 10*0.4
+//		무료배송 선호도 1*3
+//		뿌리 선호도 1*3
+//		구매종류 선호도 1번구매 당 1
+
 		return "thymeleaf/market/marketStat";
 	}
 }

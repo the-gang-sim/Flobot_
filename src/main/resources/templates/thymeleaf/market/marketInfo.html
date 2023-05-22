@@ -357,14 +357,14 @@ input#marketId, input#marketEmail, input[type="date"], input[type="text"], selec
 					<input type="button" id="pwChk1" value="수정하기" />
 					
 				
-					<input type="button" id="pwChk2" value="삭제하기" />
+					<input type="button" id="pwChk2" value="탈퇴하기" />
 					
 				</div>
 				<div th:if="${session.pwCheck == 'up'}">비밀번호 인증에 성공했습니다. 버튼을 다시 눌러 주세요.<br />
 					<a href="/market/marketUpdate"><input type="button" value="수정하기" /></a>
   				</div>
 				<div th:if="${session.pwCheck == 'de'}">비밀번호 인증에 성공했습니다. 버튼을 다시 눌러 주세요.<br />
-					<a href="/market/marketDelete"><input type="button" value="삭제하기" /></a>
+					<a href="/market/marketDelete"><input type="button" value="탈퇴하기" /></a>
   				</div>
   				
   				 <br/>

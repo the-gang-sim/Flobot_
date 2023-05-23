@@ -4,6 +4,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
+
+
+
+
+a{
+    text-decoration: none;
+    color: #222;
+}
+
+/*member sign in*/
+
+.member .logo{
+    /*로고는 이미지라 인라인 블록이니까 마진 오토 안됨 블록요소만 됨 */
+    display: block;
+    margin :50px auto;
+}
+
+.member .field{
+    margin :5px 0; /*상하로 좀 띄워주기*/
+}
+
+
+
+
+
+
+
 /* body { */
 /*   padding:1.5em; */
 /*   background: #f5f5f5 */
@@ -86,6 +114,20 @@ a {
 	color: white;
 	width: 70px;
 	height: 40px;
+	
+	
+}
+
+.member input[type=submit] {
+	width: 55px;
+	height: 30px;
+	border: 0;
+	outline: none;
+	border-radius: 10px;
+	background: gray;
+	color: white;
+	font-size: 1.2em;
+	letter-spacing: 2px;
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
@@ -126,7 +168,7 @@ function btn(qut){
 			$("#notice").html(result);
 		},
 		error : function(){
-			alert("상세 리뷰를 보고싶으면 로그인 하세요");
+			alert("ㅁㅁ");
 			return false;
 		}
 	});
@@ -135,12 +177,18 @@ function btn(qut){
 </script>
 </head>
 <body>
+
+<div class="member">
+        <!-- 1. 로고 -->
+       <div align = "center"><h1 class="logo"><b><a href= "/">flobot</a></b></h1>
+       </div>
 입점 업체 목록</br>
 <form action="marketList" >
 업체 검색 : <input type="search" name="marketWord" size=50 th:value="${marketWord}"/>
 		    <input type="submit" value="검색" />
 </form>
 <br/>
+
 <form action="marketsDelete" id="frm" >
 <table  >
 <tr align = "center"><thead><th>번호</th><th>입점업체번호</th><th>업체아이디</th><th>업체이름</th><th>입점일</th><th>연락처</th>
@@ -160,6 +208,7 @@ function btn(qut){
 </tr>
 </table>
 </form>
+
 <br />
 <div align = "center">
 	<div id="chart" onclick="btn('1');"style="display: inline-block">
@@ -177,7 +226,7 @@ function btn(qut){
 	<div id="notice">
 	</div>
 </div>
-<a href="/">메인으로가기</a>
+
 
 </body>
 </html>

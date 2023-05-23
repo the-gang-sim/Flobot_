@@ -72,9 +72,11 @@ order by market_num desc
 	</select>
 	<select id="adminStat" parameterType="string" resultType="statVO">
 		select rownum rn, stat_year statYear, stat_qut statQut,
-			stat_sales statSales, stat_profit statProfit,  stat_tot_profit statTotprofit , market_num marketNum
-		from stat
+			stat_sales statSales, stat_profit statProfit,  stat_tot_profit statTotprofit , stat.market_num marketNum,
+			market_name marketName
+		from stat join market
+		on stat.market_num = market.market_num
 		where stat_qut =#{statQut}
-		order by market_num desc
+		order by stat.market_num desc
 	</select>
 </mapper>

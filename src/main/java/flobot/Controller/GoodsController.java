@@ -67,7 +67,7 @@ public class GoodsController {
 	@GetMapping("goodsDelete")
 	public String goodsDelete(@RequestParam(value="goodsNum")String goodsNum, HttpSession session) {
 		goodsDeleteService.execute(goodsNum, session );
-		return "thymeleaf/Flobot";
+		return "redirect:/";
 	}
 	@GetMapping("goodsUpdate")
 	public String goodsUpdate(@RequestParam(value="goodsNum")String goodsNum, Model model) {

@@ -20,7 +20,7 @@ table {
 }
 
 th {
-  text-align: left;
+  text-align: center;
 }
   
 thead {
@@ -62,7 +62,7 @@ a {
   }
   
   thead {
-    float: left;
+    float: center;
     white-space: nowrap;
   }
   
@@ -89,7 +89,7 @@ a {
   
   }
 button#noticebutton {
-	background-color: tomato;
+	background-color: #B8860B;
 	border-radius: 10px;
 	color: white;
 	width: 70px;
@@ -130,6 +130,9 @@ function drawChart2() {
 	data.addRows([[${profit}]]);
 
 	var options = {
+			series: {
+				0: { color: '#FE9A2E' }
+			},
 	  chart: {
 	  	title: '이번주 일별 방문자 현황',
 	    subtitle: '1만원'
@@ -148,6 +151,9 @@ function drawChart3() {
 	data.addRows([[${totProfit}]]);
 
 	var options = {
+			series: {
+				0: { color: '#a561bd' }
+			},
 	  chart: {
 	  	title: '이번주 일별 방문자 현황',
 	    subtitle: '1만원'
@@ -169,7 +175,7 @@ function drawChart3() {
 <table align = "center" style="width:90%">
     <thead>
     <tr>
-        <th>분기</th>
+        <th>[[${qut}]]분기</th>
         <th>매출액</th>
         <th>영업이익</th>
         <th>매출 총 이익</th>
@@ -177,7 +183,7 @@ function drawChart3() {
     </thead>
     <tbody>
     <tr th:each = "vo : ${list}">
-        <td>[[${vo.statYear}]].[[${vo.statQut}]]</td>
+        <td>[[${vo.marketName}]]</td>
         <td>[[${vo.statSales}]]</td>
         <td>[[${vo.statProfit}]]</td>
         <td>[[${vo.statTotprofit}]]</td>

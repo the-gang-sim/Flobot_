@@ -273,8 +273,9 @@ function w3_open() {
 			<td><span class="cartPrice" th:id="${'price'+vo.goodsNum}"><img src="/static/image/cost.jpg" width="15" /> [[${vo.goodsPrice}]] ₩</td>
 			<td><img src="/static/image/deli.png" width="15" /><span class="deli" th:id="${vo.deliveryCost}"> [[${vo.deliveryCost}]] ₩</span></td>
 		</tr>
-		<tr><td colspan="5" align="right">총 구매비용 : <span id="tot"></span></td><td><input type="submit" value="구매하기" /></td></tr>
-	</table>
+		<tr><td colspan="5" align="right">총 구매비용 : <span id="tot"></span></td>
+		<td><input type="submit" value="구매하기" style = "background-color:#2196F3; color:white; border: none; width:100px; height:50px; font-size:20px; border-radius: 10px;"/></td></tr>
+	</table><br/>
 </form>
 </div>
 </body>

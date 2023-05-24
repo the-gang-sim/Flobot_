@@ -294,16 +294,16 @@ $(function(){
 			<th:block th:if="${idx.count < 7}">
 				<td>  
 					<div class="w3-display-container">
-						<a th:href="|/corner/prodInfo/${vo.goodsNum}|"><img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="200"/>
-						<span th:if="${vo.totalQty<10 && vo.totalQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
+						<a th:href="|/corner/prodInfo/${vo.goodsVO.goodsNum}|"><img th:src="|/goods/image/${vo.goodsVO.goodsMain}|" width="200" height="200"/>
+						<span th:if="${vo.ipgoVO.totalIpgoQty<10 && vo.ipgoVO.totalIpgoQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
 						<div class="w3-display-middle">
-							<span th:if="${vo.totalQty == null}" class="w3-button w3-black">상품준비중</span>
+							<span th:if="${vo.ipgoVO.totalIpgoQty == null}" class="w3-button w3-black">상품준비중</span>
 						</div>
 					</div>
-						상품명:[[${vo.goodsName}]]<br/>
-						가격:<span th:if="${vo.goodsPrice == null}">상품준비중</span><span th:if="${vo.goodsPrice!=null}">[[${vo.goodsPrice}]]</span>	<br/>
-						재고:<span th:if="${vo.totalQty == null}">상품준비중</span><span th:if="${vo.totalQty<10 && vo.totalQty>0}">[[${vo.totalQty}]]</span><span th:if="${vo.totalQty>10}">[[${vo.totalQty}]]</span><br/>
-						배송비:[[${vo.deliveryCost}]]
+						상품명:[[${vo.goodsVO.goodsName}]]<br/>
+						가격:<span th:if="${vo.ipgoVO.goodsPrice == null}">상품준비중</span><span th:if="${vo.ipgoVO.goodsPrice!=null}">[[${vo.ipgoVO.goodsPrice}]]</span>	<br/>
+						재고:<span th:if="${vo.ipgoVO.totalIpgoQty == null}">상품준비중</span><span th:if="${vo.ipgoVO.totalIpgoQty<10 && vo.ipgoVO.totalIpgoQty>0}">[[${vo.ipgoVO.totalIpgoQty}]]</span><span th:if="${vo.ipgoVO.totalIpgoQty>10}">[[${vo.ipgoVO.totalIpgoQty}]]</span><br/>
+						배송비:[[${vo.goodsVO.deliveryCost}]]
 				</td>
 			<th:block th:if="${idx.count % 3 == 0}" th:utext="'</tr><tr>'"/>
 			</th:block>

@@ -15,4 +15,5 @@ public class GoodsIpgoVO {
 	Date ipgoDate;
 	Date madeDate;
 	Integer goodsPrice;
+	Integer totalIpgoQty;
 }

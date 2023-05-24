@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 
 import flobot.Mapper.GoodsMapper;
 import flobot.domain.AuthInfoVO;
-import flobot.domain.GoodsVO;
+import flobot.domain.GoodsGoodsIpgoPrpVO;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -20,17 +20,17 @@ public class GoodsListService {
 		AuthInfoVO authInfo = (AuthInfoVO) session.getAttribute("authInfo");
 		if(authInfo!=null) {
 			if(authInfo.getGrade().equals("mar")) {
-				List<GoodsVO> list = goodsMapper.goodsList(authInfo.getUserNum());
+				List<GoodsGoodsIpgoPrpVO> list = goodsMapper.goodsList(authInfo.getUserNum());
 				model.addAttribute("list", list);
 			}else if(authInfo.getGrade().equals("mem")){
-				List<GoodsVO> list = goodsMapper.goodsPrpList(authInfo.getUserNum());
+				List<GoodsGoodsIpgoPrpVO> list = goodsMapper.goodsPrpList(authInfo.getUserNum());
 				model.addAttribute("list", list);
 			}else{
-				List<GoodsVO> list = goodsMapper.goodsList(null);
+				List<GoodsGoodsIpgoPrpVO> list = goodsMapper.goodsList(null);
 				model.addAttribute("list", list);
 			}
 		}else {
-			List<GoodsVO> list = goodsMapper.goodsList(null);
+			List<GoodsGoodsIpgoPrpVO> list = goodsMapper.goodsList(null);
 			model.addAttribute("list", list);
 		}
 		

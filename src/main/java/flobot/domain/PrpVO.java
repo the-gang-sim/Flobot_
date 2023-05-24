@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Alias("prpVO")
 public class PrpVO {
+	String prpNum;
 	String goodsNum;
 	Long brilliance;
 	Long deliCharge;

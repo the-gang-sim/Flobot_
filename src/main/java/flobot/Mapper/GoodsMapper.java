@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import flobot.domain.GoodsGoodsIpgoPrpVO;
 import flobot.domain.GoodsVO;
 import flobot.domain.PrpVO;
 import flobot.domain.WishVO;
@@ -21,7 +22,7 @@ public interface GoodsMapper {
 	
 	public int marketDelete(String userNum);
 
-	public List<GoodsVO> goodsList(String userNum);
+	public List<GoodsGoodsIpgoPrpVO> goodsList(String userNum);
 
 	public int goodsUpdate(GoodsVO vo);
 	
@@ -31,7 +32,7 @@ public interface GoodsMapper {
 
 	public void visitAdd(String goodsNum);
 
-	public List<GoodsVO> goodsPrpList(String userNum);
+	public List<GoodsGoodsIpgoPrpVO> goodsPrpList(String userNum);
 
 	public void goodsPrpRegi(PrpVO prp);
 }

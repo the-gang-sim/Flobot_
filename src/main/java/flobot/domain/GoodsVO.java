@@ -1,6 +1,5 @@
 package flobot.domain;
 
-import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
@@ -17,8 +16,6 @@ public class GoodsVO {
 	Integer visitCount;
 	String marketNum;
 	String goodsKind;
-	Date RegiDate;
-	Date updateRegiDate;
 	String goodsMain;
 	String goodsImage;
 	String goodsMainOrg;

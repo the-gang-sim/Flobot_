@@ -14,6 +14,7 @@ public class StatVO {
 	Double statProfit;
 	Double statTotprofit;
 	String marketNum;
+	String statNum;
 	
 	String marketName;
 }

@@ -57,11 +57,21 @@ body{
 }
 .submit button {
 	border-radius: 10px;
-	background: red;
+	background: black;
 	color: white;
 	border: 0px;
 	font-size: 1em;
 	letter-spacing: 2px;
+}
+
+input#view{
+	border-radius: 10px;
+	background: black;
+	color: white;
+	border: 0px;
+	font-size: 1em;
+	letter-spacing: 2px;
+
 }
 
 </style>
@@ -220,7 +230,7 @@ $(function(){
 					<form action="/review/reviewRegi">
 						<input type="hidden" name="goodsNum" th:value="${vo.goodsNum}" />
 						<input type="hidden" name="purchaseNum" th:value="${vo.purchaseNum}" />
-						<span th:if="${vo.reviewNum == null}"><input type="submit" value="리뷰쓰기" /></span>
+						<span th:if="${vo.reviewNum == null}"><input type="submit" value="리뷰쓰기" id = "view"/></span>
 						<span th:if="${vo.reviewNum != null }"><a href="/review/reviewList"><button>리뷰보기</button></a></span>
 					</form>
 				</div>

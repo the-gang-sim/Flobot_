@@ -8,8 +8,10 @@
 
 <table th:each="vo:${list}" width="800">
 	<tr><td width="100" align="center"><b>[ [[${vo.goodsName}]] ]</b></td><td align="center">[ [[${vo.purchaseNum}]] ][ [[${vo.reviewNum}]] ]</td>
-	<td rowspan="4" width="100"><a th:href="|/review/reviewUpdate?reviewNum=${vo.reviewNum}|"><button>리뷰수정</button></a><br />
-								<a th:href="|/review/reviewDelete?reviewNum=${vo.reviewNum}|"><button>리뷰삭제</button></a></td></tr>
+	<td rowspan="4" width="100"><a th:href="|/review/reviewUpdate?reviewNum=${vo.reviewNum}|">
+	<button style = "background-color:black; color: white">리뷰수정</button></a><br />
+								<a th:href="|/review/reviewDelete?reviewNum=${vo.reviewNum}|">
+								<button style = "background-color:black; color: white">리뷰삭제</button></a></td></tr>
 	<tr><td rowspan="3"><img th:src="|/goods/image/${vo.goodsMain}|" width="100"/></td><td>[[${#dates.format(vo.reviewDate,'yyyy-MM-dd')}]]</td></tr>
 	<tr><td>[[${vo.reviewScore}]]점</td></tr>
 	<tr><td>[[${vo.reviewContent}]]</td></tr>

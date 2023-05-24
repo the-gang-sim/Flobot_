@@ -195,7 +195,7 @@ $(function(){
                  <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>총 상품금액 : <span id="tot"  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice + '원'}]]</span>
 						  <span id="tot" th:if="${goodsCommand.goodsPrice == null}">0원</span></p>
 						    <hr>
-		<input class="w3-button w3-orange w3-padding-large" type="button" value="장바구니"  id="cartAdd"/>
+		<img src="/static/image/장바구니.png" id="cartAdd" width="110px"/>
 		<span th:if= "${goodsCommand.totalQty!=null}">
 		<span th:if= "${session.authInfo == null}" id="order"><input class="w3-button w3-blue w3-padding-large" type="button" value="바로구매" /></span>
 		<span th:if= "${session.authInfo != null}" ><input class="w3-button w3-blue w3-padding-large" type="submit" value="바로구매" /></span></span>

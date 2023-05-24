@@ -32,7 +32,7 @@
 </div><br/><br/><br/><hr/>
 <div align="center">
 <table width="1200" >
-	<tr align="center"><th>구분</th><th>주문번호</th><th>상품명</th><th>상품이미지</th><th>총 가격</th><th>구매갯수</th><th>결제일</th><th>문의하기</th><th>결제상태</th></tr>
+	<tr align="center"><th>구분</th><th>주문번호</th><th>상품명</th><th>상품이미지</th><th>총 가격</th><th>구매갯수</th><th>결제일</th><th>문의목록</th><th>결제상태</th></tr>
 	
 	<tr th:each="vo, idx:${list}" align="center">
 		<td>[[${idx.count}]]</td>
@@ -42,7 +42,7 @@
 		<td>[[${vo.purchasePrice*vo.purchaseQty}]]</td>
 		<td>[[${vo.purchaseQty}]]</td>
 		<td>[[${vo.applDate}]]</td>
-		<td><a th:href="|/inquire/inquireWrite?goodsNum=${vo.goodsNum}|">문의하기</a></td>
+		<td><a th:href="|/inquire/MarketInquireList|">문의목록</a></td>
 		<td>
 		<span th:if="${vo.purchaseStatus == '결제대기중'}">[[${vo.purchaseStatus}]]</span>
 		<span th:if="${vo.purchaseStatus == '결제완료'}">

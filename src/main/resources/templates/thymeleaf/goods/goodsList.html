@@ -34,15 +34,15 @@
 	<table width="800">
 		<tr align="center"><th>번호</th><th>대표이미지</th><th>상품명</th><th>상품종류</th><th>제조사</th><th>재고수량</th><th>상품조회수</th><th>배송비</th><th>입고</th></tr>
 		<tr th:each="vo,idx:${list}" align="center">
-			<td><a th:href="|/goods/goodsInfo?goodsNum=${vo.goodsNum}|">[[${idx.count}]]</a></td>
-			<td><img th:src="|/goods/image/${vo.goodsMain}|" width="100" /></td>
-			<td>[[${vo.goodsName}]]</td>
-			<td>[[${vo.goodsKind}]]</td>
-			<td>[[${vo.manufacturer}]]</td>
-			<td>[[${vo.totalQty}]]</td>
-			<td>[[${vo.visitCount}]]</td>
-			<td>[[${vo.deliveryCost}]]</td>
-			<td><a th:href="|/goodsIpgo/goodsIpgo?goodsNum=${vo.goodsNum}|"><button type="button">입고</button></a></td>
+			<td><a th:href="|/goods/goodsInfo?goodsNum=${vo.goodsVO.goodsNum}|">[[${idx.count}]]</a></td>
+			<td><img th:src="|/goods/image/${vo.goodsVO.goodsMain}|" width="100" /></td>
+			<td>[[${vo.goodsVO.goodsName}]]</td>
+			<td>[[${vo.goodsVO.goodsKind}]]</td>
+			<td>[[${vo.goodsVO.manufacturer}]]</td>
+			<td>[[${vo.ipgoVO.totalIpgoQty}]]</td>
+			<td>[[${vo.goodsVO.visitCount}]]</td>
+			<td>[[${vo.goodsVO.deliveryCost}]]</td>
+			<td><a th:href="|/goodsIpgo/goodsIpgo?goodsNum=${vo.goodsVO.goodsNum}|"><button type="button">입고</button></a></td>
 		</tr>
 	</table>
 </div>

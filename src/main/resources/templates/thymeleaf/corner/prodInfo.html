@@ -16,10 +16,19 @@ html,body,h1,h2,h3,h4 {font-family:"Lato", sans-serif}
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#order").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login","login",
+					"width=600, height=600, top = 100, left=100");
+		}
+	});
+	
+	
+	
 	$("#wishBtn").click(function(){
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
-					"width=315, height=200, top = 100, left=100");
+					"width=600, height=600, top = 100, left=100");
 		}else{
 			$.ajax({
 				type:'post',
@@ -41,12 +50,17 @@ $(function(){
 		
 	});
 	$("#qty").click(function(){
-		$("#tot").text([[${goodsCommand.goodsPrice}]]  * $("#qty").val());
+		if([[${goodsCommand.goodsPrice==null}]]){
+			$("#tot").text(0 * $("#qty").val());
+		}else{
+			$("#tot").text($("#price") * $("#qty").val());
+		}
+
 	});
 	$("#cartAdd").click(function(){
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
-					"width=315, height=200, top = 100, left=100");
+					"width=600, height=600, top = 100, left=100");
 		}else{
 			$.ajax({
 				type:'post',
@@ -55,7 +69,12 @@ $(function(){
 				data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]","qty":$("#qty").val()},
 				success:function(result){
 					if(result.trim() == "1"){
-						alert("상품이 장바구니에 추가 되었습니다.");
+						if([[${goodsCommand.totalQty == null}]]){
+							alert("상품이 준비중 입니다.");
+						} else{
+							alert("상품이 장바구니에 추가 되었습니다.");
+						}
+						
 					}else{
 						alert("장바구니에 담기지 않았습니다.");
 					}
@@ -167,8 +186,8 @@ $(function(){
          </div>
           <div class="w3-col l5 w3-container">
        <br /><br />
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice + '원'}]]</span>
-				  <span  th:if="${goodsCommand.goodsPrice == null}">상품준비중</span></p>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}" id="price" value="[[${goodsCommand.goodsPrice}]]">[[${goodsCommand.goodsPrice + '원'}]]</span>
+				  <span  th:if="${goodsCommand.goodsPrice == null}" >상품준비중</span></p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>배송비 : <span th:if="${goodsCommand.deliveryCost == 0}">무료배송</span>
 					 <span th:if="${goodsCommand.deliveryCost != 0}">
 					 [[${#numbers.formatCurrency(goodsCommand.deliveryCost)}]]</span></p>
@@ -177,7 +196,9 @@ $(function(){
 						  <span id="tot" th:if="${goodsCommand.goodsPrice == null}">0원</span></p>
 						    <hr>
 		<input class="w3-button w3-orange w3-padding-large" type="button" value="장바구니"  id="cartAdd"/>
-		<input class="w3-button w3-blue w3-padding-large" type="submit" value="바로구매" />
+		<span th:if= "${goodsCommand.totalQty!=null}">
+		<span th:if= "${session.authInfo == null}" id="order"><input class="w3-button w3-blue w3-padding-large" type="button" value="바로구매" /></span>
+		<span th:if= "${session.authInfo != null}" ><input class="w3-button w3-blue w3-padding-large" type="submit" value="바로구매" /></span></span>
         </div>
       </div>
   

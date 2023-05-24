@@ -10,7 +10,7 @@ $(function(){
 		var st = $( 'input#st' ).val();
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
-					"width=315, height=200, top = 100, left=100");
+					"width=600, height=600, top = 100, left=100");
 		}else{
 			window.open("/inquire/inquireWrite?goodsNum=[[${goodsNum}]]&marketNum=[[${marketNum}]]"+st, "inquireWrite",
 					"width=700, height=650, top = 100, left=100");
@@ -79,8 +79,8 @@ function inquireDelete(inquireNum){
 			<p align="right">
 			<th:block th:if="${session.authInfo != null and vo.inquireAnswer == null}">
 				<th:block th:if="${session.authInfo.userId == vo.memberId}">
-					<button type="button" th:attr="onclick=|inquireUpdate('${vo.inquireNum}')|">문의수정</button> | 
-					<button type="button" th:attr="onclick=|inquireDelete('${vo.inquireNum}')|">문의삭제</button>
+					<button type="button" th:attr="onclick=|inquireUpdate('${vo.inquireNum}')|" style = "background-color:black; color: white">문의수정</button> | 
+					<button type="button" th:attr="onclick=|inquireDelete('${vo.inquireNum}')|" style = "background-color:black; color: white">문의삭제</button>
 				</th:block>
 			</th:block>
 			</p>

@@ -63,7 +63,7 @@ $(function(){
 	$("#btn").click(function(){
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
-					"width=315, height=200, top = 100, left=100");
+					"width=600, height=600, top = 100, left=100");
 		}else{
 			alert("찜목록에 추가 되었습니다.");
 		}
@@ -71,7 +71,7 @@ $(function(){
 	$("#btn2").click(function(){
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
-					"width=315, height=200, top = 100, left=100");
+					"width=600, height=600, top = 100, left=100");
 		}else{
 			alert("장바구니에 추가 되었습니다.");
 		}
@@ -236,8 +236,14 @@ function w3_open() {
 				<img th:src="|/goods/image/${vo.goodsMain}|" width="200" height="200"/></a></td>
 				<td><a style="text-decoration-line: none" th:href="|/corner/prodInfo/${vo.goodsNum}|"><b>[ [[${vo.manufacturer}]] ] [[${vo.goodsName}]]</b></td>
 				<td rowspan="4" width="150" align="center">
-					<a th:href="|/corner/goodsWishAdd2?goodsNum=${vo.goodsNum}&keyword=${keyword}&page=${page}|"><input type="button" id="btn" value="찜하기" /></a><br />
-					<a th:href="|/corner/cartAdd2?goodsNum=${vo.goodsNum}&keyword=${keyword}&page=${page}|"><input type="button" id="btn2" value="장바구니" /></a>
+				
+				<span th:if= "${session.authInfo == null}">
+					<input type="button" id="btn" value="찜하기" /><br/>
+					<input type="button" id="btn2" value="장바구니" />				</sapn>
+					<span th:if= "${session.authInfo != null}">
+					<a th:href="|/corner/goodsWishAdd2?goodsNum=${vo.goodsNum}&keyword=${keyword}&page=${page}|">
+					<input type="button" id="btn" value="찜하기" /></a>
+					<a th:href="|/corner/cartAdd2?goodsNum=${vo.goodsNum}&keyword=${keyword}&page=${page}|"><input type="button" id="btn2" value="장바구니" /></a></span>
 				</td>
 			</tr>
 			<tr>

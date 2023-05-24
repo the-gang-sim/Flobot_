@@ -29,7 +29,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("market")
 public class MarketController {
 	@Autowired
 	MarketRegiService marketRegiService;
@@ -44,13 +43,13 @@ public class MarketController {
 	@Autowired
 	MarketStatService marketStatService;
 	
-	@GetMapping("marketInsert")
+	@GetMapping("/join/marketInsert")
 	public String marketAgree(@ModelAttribute(value="Agree")String Agree) {
 		
 		return "thymeleaf/market/marketAgree";
 	}
 	
-	@GetMapping("marketRegi")
+	@GetMapping("/join/marketRegi")
 	public String marketInsert(@ModelAttribute(value="Agree")String Agree, MarketCommand marketCommand) {
 		if(Agree.equals("yes")) {
 			return "thymeleaf/market/marketRegi";
@@ -58,7 +57,7 @@ public class MarketController {
 		return "thymeleaf/market/marketAgree";
 	}
 	
-	@PostMapping("marketRegi")
+	@PostMapping("/join/marketRegi")
 	public String marketInsert(@Validated MarketCommand marketCommand, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "thymeleaf/market/marketRegi";
@@ -71,20 +70,20 @@ public class MarketController {
 		return "thymeleaf/market/marketInfo";
 	}
 	
-	@GetMapping("marketInfo")
+	@GetMapping("/market/marketInfo")
 	public String marketInfo(Model model, HttpSession session) {
 		marketInfoService.execute(model, session);
 		return "thymeleaf/market/marketInfo";
 	}
 	
-	@GetMapping("marketUpdate")
+	@GetMapping("/market/marketUpdate")
 	public String marketUpdate(MarketCommand marketCommand, Model model, HttpSession session) {
 		session.removeAttribute("pwCheck");
 		marketInfoService.execute(model, session);
 		return "thymeleaf/market/marketUpdate";
 	}
 	
-	@PostMapping("marketUpdate")
+	@PostMapping("/market/marketUpdate")
 	public String marketUpdate(@Validated MarketCommand marketCommand, BindingResult result,Model model) {
 		if (result.hasErrors()) {
 			System.out.println(result.getFieldError());
@@ -95,7 +94,7 @@ public class MarketController {
 		return "thymeleaf/market/marketInfo";
 	}
 	
-	@GetMapping("marketDelete")
+	@GetMapping("/market/marketDelete")
 	public String marketDelete(HttpSession session) {
 		marketDeleteService.execute(session);
 		return "redirect:/";
@@ -103,18 +102,18 @@ public class MarketController {
 	
 	@Autowired
 	MarketsDeleteService marketsDeleteService;
-	@RequestMapping("marketsDelete")
+	@RequestMapping("/market/marketsDelete")
 	public String marketsDelete(
 			@RequestParam(value="marketDels") String marketDels []) {
 		marketsDeleteService.execute(marketDels);
 		return "redirect:marketList";
 	}
 	
-	@GetMapping("pwCheck")
+	@GetMapping("/market/pwCheck")
 	public String pwCheck(@ModelAttribute(value="upde")String upde,LoginCommand loginCommand) {
 		return "thymeleaf/market/pwCheck";
 	}
-	@PostMapping("pwCheck")
+	@PostMapping("/market/pwCheck")
 	public String pwCheck(@ModelAttribute(value="upde")String upde, LoginCommand loginCommand, BindingResult result, HttpServletResponse response, HttpSession session) {
 		if(!loginCommand.getUserPw().equals(loginCommand.getUserPwCon())) {
 			result.rejectValue("userPwCon","loginCommand.userPwCon", "입력한 비밀번호를 다시 확인해주세요.");
@@ -142,7 +141,7 @@ public class MarketController {
 	
 	@Autowired
 	MarketListService marketListService;
-	@RequestMapping("marketList")
+	@RequestMapping("/market/marketList")
 	public String marketList(
 			@RequestParam(value="marketWord" , required = false) String marketWord
 			,Model model) {
@@ -152,7 +151,7 @@ public class MarketController {
 	
 	@Autowired
 	MarketDetailService marketDetailService;
-	@RequestMapping("marketDetail")
+	@RequestMapping("/market/marketDetail")
 	public String marketDetail(
 			@RequestParam(value="marketNum")String marketNum,
 			Model model) {
@@ -160,7 +159,7 @@ public class MarketController {
 		return "thymeleaf/market/marketDetail";
 	}
 	
-	@RequestMapping("stat")
+	@RequestMapping("/market/stat")
 	public String marketStat(Model model, HttpSession session) {
 		marketStatService.execute(model, session);
 //		PRP 테이블 추가(상품추천가중치)

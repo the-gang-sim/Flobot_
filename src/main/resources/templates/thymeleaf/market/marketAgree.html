@@ -223,7 +223,15 @@ img {
     
     
     </style>
-    
+    <script>
+  function appendCheckboxValue() {
+    var checkboxValue = document.getElementById("agree").value;
+    var url = "/join/marketRegi?Agree=" + checkboxValue;
+    window.location.href = url;
+    return false;
+  }
+</script>
+
 </head>
 <body>
 
@@ -265,8 +273,9 @@ img {
 
 
 
-<input type="checkbox" name="agree" required="required" /> 약관에 동의합니다 <br/>
-<a href="/join/marketRegi?Agree=yes"><input type="submit" value="동의"/></a>	
+
+<input type="checkbox" value="asdfsadf" id="agree">
+<a href="/join/marketRegi?Agree=" onclick="return appendCheckboxValue()">동의</a>	
 <br/>
 </body>
 </html>

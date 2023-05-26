@@ -54,10 +54,8 @@ public class SearchController {
 	@PostMapping("/image")
 	public String imgSearch(LoginCommand loginCommand,@RequestParam(value="searchImg")MultipartFile searchImg,HttpSession session, Model model) {
 		String filedir = "C:/Flobot/image";
-		
 		MultipartFile mf = searchImg; // MultipartFile로 가져온 커맨드 가져오기
 		String mainOrg = mf.getOriginalFilename(); // MultipartFile String 타입으로 파일 이름 가져오기
-				
 		File file = new File(filedir + "/" + mainOrg); // 생성한 랜덤이름과 확장자로 파일 생성
 		try {
 			mf.transferTo(file); // 생성한 파일에 원본이미지 저장
@@ -79,26 +77,17 @@ public class SearchController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(result);
 		file.delete();
 		model.addAttribute("flower", result);
 		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\""; // 작업스케줄러 실행
 	    Process process;
 		try {
 			process = Runtime.getRuntime().exec(command);
-
-		    // 실행 결과 확인 (선택사항)
 		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		    String line;
-		    while ((line = reader.readLine()) != null) {
-		        System.out.println(line);
-		    }
 		    reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		imageService.execute(model, result);
 		return "thymeleaf/search/flower";
 	}

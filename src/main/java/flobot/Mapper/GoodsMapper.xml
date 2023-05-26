@@ -50,7 +50,6 @@
 		<result column="TREE" jdbcType="BIGINT" property="herb"/>
 		<result column="HERB" jdbcType="BIGINT" property="tree"/>
 		<result column="FLOWER" jdbcType="BIGINT" property="fleshy"/>
-		
 	</resultMap>
 	<resultMap type="GIPVO" id="GIPResultMap">
 		<association property="ipgoVO"  javaType="ipgoVO" resultMap="goodsIpgoResultMap"/>

@@ -33,7 +33,5 @@ public class GoodsListService {
 			List<GoodsGoodsIpgoPrpVO> list = goodsMapper.goodsList(null);
 			model.addAttribute("list", list);
 		}
-		
 	}
-	
 }

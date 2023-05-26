@@ -38,13 +38,9 @@
 	</select>
 	
 	<select id = "imageSearch" parameterType="string" resultType="flowerVO">
-	
-	select flower_Num flowerNum, flower_Name flowerName, flower_Kind flowerKind,
-			flower_Content flowerContent, flower_Image flowerImage
-	from flower
-	where flower_name = #{result}
-	
-	
-	
+		select flower_Num flowerNum, flower_Name flowerName, flower_Kind flowerKind,
+				flower_Content flowerContent, flower_Image flowerImage
+		from flower
+		where flower_name = #{result}
 	</select>
 </mapper>

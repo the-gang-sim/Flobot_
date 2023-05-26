@@ -263,8 +263,9 @@ $(function(){
 			<div class="submit">
 				<input type="submit" value="검색" style="height: 35px" />
 			</div>
-			<a href="/search/image"><img src="/static/image/smartphone.png"
-				width="35"></a>
+			
+			<a href="/search/image"><img src="/static/image/smartphone.png"	width="35"></a>
+			
 			<li class="nav-item"><span th:if="${session.authInfo == null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그인</p>
 								</span> <span th:if="${session.authInfo != null}"><p id="loginBtn" class="w3-bar-item w3-button" style="color: black">로그아웃</p> </span></li>
 			<th:block th:if="${session.authInfo == null}">
@@ -282,27 +283,29 @@ $(function(){
 	</div>
 
 	<div class="container" align="center">
-	
 		<th:block th:if="${session.authInfo != null and session.authInfo.grade == 'a'}">
 			<hr />
 			<a href="admin/adminPage">관리자 전용 페이지</a>
 		</th:block>
-	
 		<table>
 			<hr />
 			<th:block th:each="vo,idx : ${list}">
 			<th:block th:if="${idx.count < 7}">
 				<td>  
 					<div class="w3-display-container">
-						<a th:href="|/corner/prodInfo/${vo.goodsVO.goodsNum}|"><img th:src="|/goods/image/${vo.goodsVO.goodsMain}|" width="200" height="200"/>
+						<a th:href="|/corner/prodInfo/${vo.goodsVO.goodsNum}|">
+						<img th:src="|/goods/image/${vo.goodsVO.goodsMain}|" width="200" height="200"/>
 						<span th:if="${vo.ipgoVO.totalIpgoQty<10 && vo.ipgoVO.totalIpgoQty>0}" class="w3-tag w3-display-topleft">품절임박</span>
 						<div class="w3-display-middle">
 							<span th:if="${vo.ipgoVO.totalIpgoQty == null}" class="w3-button w3-black">상품준비중</span>
 						</div>
 					</div>
 						상품명:[[${vo.goodsVO.goodsName}]]<br/>
-						가격:<span th:if="${vo.ipgoVO.goodsPrice == null}">상품준비중</span><span th:if="${vo.ipgoVO.goodsPrice!=null}">[[${vo.ipgoVO.goodsPrice}]]</span>	<br/>
-						재고:<span th:if="${vo.ipgoVO.totalIpgoQty == null}">상품준비중</span><span th:if="${vo.ipgoVO.totalIpgoQty<10 && vo.ipgoVO.totalIpgoQty>0}">[[${vo.ipgoVO.totalIpgoQty}]]</span><span th:if="${vo.ipgoVO.totalIpgoQty>10}">[[${vo.ipgoVO.totalIpgoQty}]]</span><br/>
+						가격:<span th:if="${vo.ipgoVO.goodsPrice == null}">상품준비중</span>
+								<span th:if="${vo.ipgoVO.goodsPrice!=null}">[[${vo.ipgoVO.goodsPrice}]]</span>	<br/>
+						재고:<span th:if="${vo.ipgoVO.totalIpgoQty == null}">상품준비중</span>
+								<span th:if="${vo.ipgoVO.totalIpgoQty<10 && vo.ipgoVO.totalIpgoQty>0}">[[${vo.ipgoVO.totalIpgoQty}]]</span>
+								<span th:if="${vo.ipgoVO.totalIpgoQty>10}">[[${vo.ipgoVO.totalIpgoQty}]]</span><br/>
 						배송비:[[${vo.goodsVO.deliveryCost}]]
 				</td>
 			<th:block th:if="${idx.count % 3 == 0}" th:utext="'</tr><tr>'"/>
@@ -310,8 +313,8 @@ $(function(){
 			</th:block>
 		</table>
 	</div>
-
 </th:block>
+
 <th:block th:if="${session.authInfo != null and session.authInfo.grade == 'mar'}">
 	<div class="container">
 		<ul class="nav justify-content-end">

@@ -235,16 +235,18 @@ function setThumbnail(event) {
 
 
 <br/>
-<div align="center">
-<form action="image" method="post" enctype="multipart/form-data"> 
-이름을 알고싶은 꽃 사진을 업로드 해주세요 <br/><br/>
-<div id="image_container"></div>
-<br/><br/>
-<div class="search_submit">
-<input type="file" name="searchImg"  id="image" accept="image/*" onchange="setThumbnail(event);" multiple//>
-<input type="submit" value="검색" />
-</div>
-</form>
-</div>
+
+	<div align="center">
+		<form action="image" method="post" enctype="multipart/form-data"> 
+		이름을 알고싶은 꽃 사진을 업로드 해주세요 
+		<br/><br/>
+			<div id="image_container"></div>
+			<br/><br/>
+			<div class="search_submit">
+				<input type="file" name="searchImg"  id="image" accept="image/*" onchange="setThumbnail(event);" multiple required="required"/>
+				<input type="submit" value="검색" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>

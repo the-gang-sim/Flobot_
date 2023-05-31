@@ -81,12 +81,16 @@ public class LoginController {
 	@PostMapping("findId")
 	public String findId(@Validated LoginCommand loginCommand, BindingResult result,Model model) {
 		MemberVO vo = loginMapper.findId(loginCommand.getUserName());
-		if(vo.getMemberPhone().equals(loginCommand.getUserPhone())) {
+		if(vo == null) {
+			result.rejectValue("userId", "loginCommand.userId", "없는 이름입니다. 다시확인해주세요");
+			return "thymeleaf/login/findId";
+		}else if(vo.getMemberPhone().equals(loginCommand.getUserPhone())) {
 			model.addAttribute("userId",vo.getMemberId());
 			return "thymeleaf/login/findIdResult";
+		}else {
+			result.rejectValue("userId", "loginCommand.userId", "연락처가 틀렸습니다. 다시확인해주세요");
+			return "thymeleaf/login/findId";
 		}
-		result.rejectValue("userId", "loginCommand.userId", "없는 정보입니다. 다시확인해주세요");
-		return "thymeleaf/login/findId";
 	}
 	
 	@RequestMapping(value="item.login",method= RequestMethod.GET)

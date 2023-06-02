@@ -14,4 +14,6 @@ public class LoginCommand {
 	String userPhone;
 	Boolean rememId;
 	Boolean rememLogin;
+	String up;
+	String de;
 }

@@ -17,6 +17,7 @@ import flobot.Service.Member.MemberInsertService;
 import flobot.Service.Member.MemberListService;
 import flobot.Service.Member.MemberUpdateService;
 import flobot.Service.Member.MembersDeleteService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("member")
@@ -92,8 +93,10 @@ public class MemberController {
 	MemberDeleteService memberDeleteService;
 	@RequestMapping("memberDelete")
 	public String memberDelete(
-			@RequestParam(value="memberNum") String memberNum ) {
+			@RequestParam(value="memberNum") String memberNum, HttpSession session ) {
 		memberDeleteService.execute(memberNum);
+
+		session.invalidate();
 		return "redirect:/";
 	}
 	

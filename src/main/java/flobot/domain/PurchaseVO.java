@@ -24,4 +24,6 @@ public class PurchaseVO {
 	
 	Integer purchasePrice;
 	String [] goodsNums;
+	Integer purchaseQty;
+	String goodsNum;
 }

@@ -94,4 +94,11 @@ order by market_num desc
 		where stat_qut =#{statQut}
 		order by stat.market_num desc
 	</select>
+	
+	<select id="chartList" parameterType="string" resultType="purVO">
+	select sum(purchase_qty) purchaseQty, avg(purchase_price) purchasePrice, g.goods_num goodsNum
+	from (select * from purchase_list where purchase_status = '구매완료' or purchase_status='결제완료') l join (select market_num, goods_num from goods where market_num = #{marektNum}) g
+	on g.goods_num = l.goods_num
+	group by g.goods_num
+	</select>
 </mapper>

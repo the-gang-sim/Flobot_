@@ -92,7 +92,7 @@
         on g.goods_Num = pl.goods_Num left outer join payment pm
 		on pm.purchase_Num = p.purchase_Num 
 		where p.member_num = #{userNum}
-		order by p.purchase_num desc
+		order by p.purchase_Num desc
 	</select>
 	<select id="marketPurchaseList" resultType="orderListVO">
 		select g.goods_Name goodsName, g.goods_Main goodsMain, g.goods_Num
@@ -104,6 +104,7 @@
 		on pm.purchase_Num = p.purchase_Num join goods g
 		on g.goods_num = pl.goods_num
 		where g.market_num = #{userNum}
+		order by p.purchase_Num desc
 	</select>
 	<insert id="deliveryInsert">
 		insert into delivery(PURCHASE_NUM, DELIVERY_NUMBER, delivery_company)
@@ -139,7 +140,7 @@
 			                    </foreach>))
 		when not matched then
 			insert (prp_num, member_num, brilliance, deli_charge, root_yn)
-			values((select concat('prp00',nvl(max(substr(prp_num,7)),0)+ 1) from prp), #{memberNum}, (select avg(brilliance) from(select brilliance from prp
+			values((select concat('prp00',nvl(max(substr(prp_num,6)),0)+ 1) from prp), #{memberNum}, (select avg(brilliance) from(select brilliance from prp
 			where goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator="," index="index">
 								#{goodsNum}
 			                    </foreach>)), (select avg(deli_charge) from(select deli_charge from prp

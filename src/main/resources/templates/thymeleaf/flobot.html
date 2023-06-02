@@ -73,6 +73,8 @@ google.charts.load('current', {'packages':['line']});
 google.charts.setOnLoadCallback(drawChart1);
 google.charts.setOnLoadCallback(drawChart2);
 google.charts.setOnLoadCallback(drawChart3);
+google.load('visualization', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart4);
 
 function drawChart1() {
 	var data = new google.visualization.DataTable();
@@ -94,9 +96,6 @@ function drawChart2() {
 	data.addColumn('number', '영업이익');
 	data.addRows([[${statProfit}]]);
 	var options = {
-		series: {
-			0: { color: '#FE9A2E' }
-		},
 	  chart: {
 	    title: '영업이익',
 	    subtitle: '1만원'
@@ -122,6 +121,25 @@ function drawChart3() {
 	var chart3 = new google.charts.Line(document.getElementById('linechart_material3'));
 
 	chart3.draw(data, google.charts.Line.convertOptions(options));
+}
+function drawChart4() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('number', '상품번호');
+	data.addColumn('number', '상품판매액');
+	data.addRows([[${marketSum}]]);
+	var options = {
+	  chart: {
+	    title: '상품판매액',
+	    subtitle: '원'
+	  },
+	  bars: 'vertical',
+	  bar: {
+	    groupWidth: '10%' 
+	  }
+	};
+	
+	var chart4 = new google.visualization.BarChart(document.getElementById('linechart_material4'));
+	chart4.draw(data, google.charts.Line.convertOptions(options));
 }
 // Accordion 
 function myAccFunc(kind) {
@@ -344,6 +362,8 @@ $(function(){
 		<div id = "linechart_material2" style="width:30%;height:300px;display: inline-block">
 		</div>
 		<div id = "linechart_material3" style="width:30%;height:300px;display: inline-block">
+		</div>
+		<div id = "linechart_material4" style="width:90%;height:500px" >
 		</div>
 	</div>
 </th:block>

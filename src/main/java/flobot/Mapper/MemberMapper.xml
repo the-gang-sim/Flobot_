@@ -67,5 +67,10 @@ where MEMBER_NUM = #{memberNum}
 	</foreach>
 </delete>
 
+<select id="memberPrpChk" parameterType="string" resultType="prpVO">
+	select member_Num memberNum
+	from prp 
+	where member_num = #{memberNum}
+</select>
 
 </mapper>

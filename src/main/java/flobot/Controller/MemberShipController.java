@@ -90,19 +90,24 @@ public class MemberShipController {
 	
 	@PostMapping("memberPwChk")
 	public String memberPwChk(@RequestParam(value="chk")String chk,LoginCommand loginCommand,Model model, BindingResult result,HttpSession session) {
-		int i = memberPwChkService.execute(loginCommand, result, session);
-		AuthInfoVO authInfo  = (AuthInfoVO) session.getAttribute("authInfo");
-		if(i>0) {
-			if(chk.equals("up")) {
-				memberDetailService.execute(authInfo.getUserNum(), model);
-				return "thymeleaf/memberShip/memberShipUpdate";
-			}else if(chk.equals("de")) {
-				return "redirect:/member/memberDelete?memberNum="+authInfo.getUserNum();
+		if(loginCommand.getUserPw().equals(loginCommand.getUserPwCon())) {
+			int i = memberPwChkService.execute(loginCommand, result, session);
+			AuthInfoVO authInfo  = (AuthInfoVO) session.getAttribute("authInfo");
+			if(i>0) {
+				if(chk.equals("up")) {
+					memberDetailService.execute(authInfo.getUserNum(), model);
+					return "thymeleaf/memberShip/memberShipUpdate";
+				}else if(chk.equals("de")) {
+					return "redirect:/member/memberDelete?memberNum="+authInfo.getUserNum();
+				}else {
+					return "thymeleaf/memberShip/memberPwModyfy";
+				}
 			}else {
-				return "thymeleaf/memberShip/memberPwModyfy";
+				result.rejectValue(chk, chk);
+				return "thymeleaf/memberShip/memberPwChk";
 			}
-		}else {
-			result.rejectValue(chk, chk);
+		}else{
+			result.rejectValue("userPwCon", "loginCommand.userPwCon", "비밀번호를 다시 확인하세요.");
 			return "thymeleaf/memberShip/memberPwChk";
 		}
 	}

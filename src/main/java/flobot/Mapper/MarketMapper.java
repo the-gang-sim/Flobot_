@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import flobot.domain.MarketVO;
+import flobot.domain.PurchaseVO;
 import flobot.domain.StatVO;
 
 @Mapper
@@ -27,5 +28,7 @@ public interface MarketMapper {
 	public List<StatVO> statList(String userNum);
 
 	public List<StatVO> adminStat(String statQut);
+
+	public List<PurchaseVO> chartList(String userNum);
 	
 }

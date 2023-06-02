@@ -7,12 +7,11 @@
 <script type="text/javascript">
 $(function(){
 	$("#btn").click(function(){
-		var st = $( 'input#st' ).val();
 		if([[${session.authInfo == null}]]){
 			window.open("/login/item.login","login",
 					"width=600, height=600, top = 100, left=100");
 		}else{
-			window.open("/inquire/inquireWrite?goodsNum=[[${goodsNum}]]&marketNum=[[${marketNum}]]"+st, "inquireWrite",
+			window.open("/inquire/inquireWrite?goodsNum=[[${goodsNum}]]&marketNum=[[${marketNum}]]", "inquireWrite",
 					"width=700, height=650, top = 100, left=100");
 		}
 	});

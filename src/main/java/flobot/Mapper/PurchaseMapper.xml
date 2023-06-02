@@ -75,7 +75,7 @@
 	</update>
 	
 	<select id="selectMember" parameterType="string" resultType="authInfoVO">
-		select member_id userId , member_email userEmail , member_pw  userPw, member_phone phone, member_Ok memberOk, 'mem' grade
+		select member_num userNum,member_id userId , member_email userEmail , member_pw  userPw, member_phone phone, member_Ok memberOk, 'mem' grade
 		from member
 		where member_num = (select member_num from purchase where purchase_num = #{purchaseNum}) 
 	</select>

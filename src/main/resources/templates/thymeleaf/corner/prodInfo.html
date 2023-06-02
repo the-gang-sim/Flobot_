@@ -49,11 +49,11 @@ $(function(){
 		}
 		
 	});
-	$("#qty").click(function(){
+	$("#qty").change(function(){
 		if([[${goodsCommand.goodsPrice==null}]]){
 			$("#tot").text(0 * $("#qty").val());
 		}else{
-			$("#tot").text($("#price") * $("#qty").val());
+			$("#tot").text($("#price").text() * $("#qty").val());
 		}
 
 	});
@@ -186,14 +186,14 @@ $(function(){
          </div>
           <div class="w3-col l5 w3-container">
        <br /><br />
-         <p><i class="fa fa-krw fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}" id="price" value="[[${goodsCommand.goodsPrice}]]">[[${goodsCommand.goodsPrice + '원'}]]</span>
+         <p><i class="fa fa-krw fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}" id="price" >[[${goodsCommand.goodsPrice}]]</span>원
 				  <span  th:if="${goodsCommand.goodsPrice == null}" >상품준비중</span></p>
          <p><i class="fa fa-truck fa-fw w3-margin-right w3-text-theme"></i>배송비 : <span th:if="${goodsCommand.deliveryCost == 0}">무료배송</span>
 					 <span th:if="${goodsCommand.deliveryCost != 0}">
 					 [[${#numbers.formatCurrency(goodsCommand.deliveryCost)}]]</span></p>
          <p><i class="fa fa-pencil  fa-fw w3-margin-right w3-text-theme"></i>수량 : <input type="number" min=1 step="1" value="1" id="qty" name="qty" /></p>
-                 <p><i class="fa fa-money fa-fw w3-margin-right w3-text-theme"></i>총 상품금액 : <span id="tot"  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice + '원'}]]</span>
-						  <span id="tot" th:if="${goodsCommand.goodsPrice == null}">0원</span></p>
+                 <p><i class="fa fa-money fa-fw w3-margin-right w3-text-theme"></i>총 상품금액 : <span id="tot"  th:if="${goodsCommand.goodsPrice != null}">[[${goodsCommand.goodsPrice}]]</span>
+						  <span id="tot" th:if="${goodsCommand.goodsPrice == null}">0</span>원</p>
 						    <hr>
 		<input class="w3-button  w3-padding-large" type="button" value="장바구니"  id="cartAdd" style = "background-color:gold"/>
 		<span th:if= "${goodsCommand.totalQty!=null}">

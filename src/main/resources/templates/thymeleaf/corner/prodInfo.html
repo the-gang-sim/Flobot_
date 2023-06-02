@@ -53,7 +53,7 @@ $(function(){
 		if([[${goodsCommand.goodsPrice==null}]]){
 			$("#tot").text(0 * $("#qty").val());
 		}else{
-			$("#tot").text($("#price").text() * $("#qty").val());
+			$("#tot").text($("#price").text().replace('원','') * $("#qty").val());
 		}
 
 	});
@@ -186,7 +186,7 @@ $(function(){
          </div>
           <div class="w3-col l5 w3-container">
        <br /><br />
-         <p><i class="fa fa-krw fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}" id="price" >[[${goodsCommand.goodsPrice}]]</span>원
+         <p><i class="fa fa-krw fa-fw w3-margin-right w3-text-theme"></i> 가격: <span  th:if="${goodsCommand.goodsPrice != null}" id="price" >[[${goodsCommand.goodsPrice}]]원</span>
 				  <span  th:if="${goodsCommand.goodsPrice == null}" >상품준비중</span></p>
          <p><i class="fa fa-truck fa-fw w3-margin-right w3-text-theme"></i>배송비 : <span th:if="${goodsCommand.deliveryCost == 0}">무료배송</span>
 					 <span th:if="${goodsCommand.deliveryCost != 0}">

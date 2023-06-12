@@ -231,8 +231,9 @@ $(function(){
 						<input type="hidden" name="goodsNum" th:value="${vo.goodsNum}" />
 						<input type="hidden" name="purchaseNum" th:value="${vo.purchaseNum}" />
 						<span th:if="${vo.reviewNum == null}"><input type="submit" value="리뷰쓰기" id = "view"/></span>
-						<span th:if="${vo.reviewNum != null }"><a href="/review/reviewList"><button>리뷰보기</button></a></span>
+						
 					</form>
+					<span th:if="${vo.reviewNum != null }"><a href="/review/reviewList"><button>리뷰보기</button></a></span>
 				</div>
 			</span>
 		</td>

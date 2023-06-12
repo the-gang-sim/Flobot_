@@ -166,7 +166,7 @@ public class IniPayReturnService {
 					//#####################
 					// 망취소 API
 					//#####################
-					String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
+					//String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
 
 					//out.println("## 망취소 API 결과 ##");
 					// 취소 결과 확인
@@ -180,8 +180,6 @@ public class IniPayReturnService {
 			}
 
 		}catch(Exception e){
-
-			System.out.println(e);
 		}
 	}
 }

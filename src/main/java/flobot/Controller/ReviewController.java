@@ -68,6 +68,6 @@ public class ReviewController {
 	@GetMapping("reviewDelete")
 	public String reviewDelete(@RequestParam(value="reviewNum")String reviewNum) {
 		reviewMapper.reviewDelete(reviewNum);
-		return "redirect:/review/reviewList";
+		return "redirect:/purchase/orderList";
 	}
 }

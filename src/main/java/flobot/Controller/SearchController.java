@@ -79,15 +79,15 @@ public class SearchController {
 		}
 		file.delete();
 		model.addAttribute("flower", result);
-		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\""; // 작업스케줄러 실행
-	    Process process;
-		try {
-			process = Runtime.getRuntime().exec(command);
-		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		    reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		String command = "schtasks /run /tn \"BrityRPA_P_TestFolbot\""; // 작업스케줄러 실행
+//	    Process process;
+//		try {
+//			process = Runtime.getRuntime().exec(command);
+//		    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//		    reader.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		imageService.execute(model, result);
 		return "thymeleaf/search/flower";
 	}

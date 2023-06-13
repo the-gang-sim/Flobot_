@@ -48,7 +48,7 @@ public class MemberJoinService {
 		model.addAttribute("userEmail", vo.getMemberEmail());
 		
 		String content="<html><body>"
-		        + vo.getMemberName() + "님 가입을 환영합니다."
+		        + vo.getMemberName() + "님 가입을 환영합니다. <br/>"
 		        + "<a href='http://localhost:8080/register/memberConfirm?chk=" + vo.getMemberEmail() +"'>"
 		        + "가입하시려면 여기를 눌러주세요.</a>"
 		        + "</body></html>";
